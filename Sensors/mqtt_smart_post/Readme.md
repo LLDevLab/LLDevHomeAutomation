@@ -1,0 +1,1 @@
+This project is based on "publish_test" example of esp-idf
