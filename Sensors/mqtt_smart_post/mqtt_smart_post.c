@@ -48,7 +48,6 @@ static size_t expected_published = 0;
 static size_t actual_published = 0;
 static int qos_test = 0;
 
-static RTC_DATA_ATTR struct timeval sleep_enter_time;
 const int ext_wakeup_pin_2 = 4;
 
 #define MESSAGE_LEN 9
@@ -154,7 +153,6 @@ static void go_to_sleep(void)
     esp_sleep_enable_ext1_wakeup(ext_wakeup_pin_2_mask, ESP_EXT1_WAKEUP_ALL_LOW);
 
     printf("Entering deep sleep\n");
-    gettimeofday(&sleep_enter_time, NULL);
 
     esp_deep_sleep_start();
 }
