@@ -5,7 +5,7 @@
 -- Dumped from database version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-03-02 21:05:52
+-- Started on 2021-03-04 19:46:51
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -171,7 +171,7 @@ ALTER TABLE ONLY public."SensorEvents"
     ADD CONSTRAINT "SensorEvents_Sensors_fk" FOREIGN KEY ("SensorId") REFERENCES public."Sensors"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
--- Completed on 2021-03-02 21:05:53
+-- Completed on 2021-03-04 19:46:52
 
 --
 -- PostgreSQL database dump complete
