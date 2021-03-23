@@ -199,11 +199,13 @@ void app_main(void)
 
     while (1) 
     {
-        char pin_high_msg[9] = "PostBox:1";
-        char pin_low_msg[9] = "PostBox:0";
+        char pin_high_msg[30] = "{\"Id\":\"PostBox\",\"Value\":true}\0";
+        char pin_low_msg[31] = "{\"Id\":\"PostBox\",\"Value\":false}\0";
         bool is_pin_low = gpio_get_level(ext_wakeup_pin_2) == 0;
         bool is_waiting = false;
-        publish_msg(is_pin_low ? pin_low_msg : pin_high_msg, 9);
+
+        char* msg = is_pin_low ? pin_low_msg : pin_high_msg;
+        publish_msg(msg, strlen(msg));
 
         if(is_pin_low)
         {
@@ -219,7 +221,7 @@ void app_main(void)
             } 
             while (gpio_get_level(ext_wakeup_pin_2) == 0);
 
-            publish_msg(pin_high_msg, 9);
+            publish_msg(pin_high_msg, strlen(pin_high_msg));
         }
  
         go_to_sleep();
