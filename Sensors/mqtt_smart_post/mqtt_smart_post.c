@@ -199,8 +199,8 @@ void app_main(void)
 
     while (1) 
     {
-        char pin_high_msg[30] = "{\"Id\":\"PostBox\",\"Value\":true}\0";
-        char pin_low_msg[31] = "{\"Id\":\"PostBox\",\"Value\":false}\0";
+        char pin_high_msg[32] = "{\"Id\":\"PostBox\",\"Value\":\"true\"}\0";
+        char pin_low_msg[33] = "{\"Id\":\"PostBox\",\"Value\":\"false\"}\0";
         bool is_pin_low = gpio_get_level(ext_wakeup_pin_2) == 0;
         bool is_waiting = false;
 
