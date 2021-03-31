@@ -161,8 +161,8 @@ static void publish_msg(char* msg, int len)
 {
     esp_mqtt_client_stop(mqtt_client);
 
-    ESP_LOGI(TAG, "[TCP transport] Startup..");
-    esp_mqtt_client_set_uri(mqtt_client, CONFIG_EXAMPLE_BROKER_TCP_URI);
+    ESP_LOGI(TAG, "[SSL transport] Startup..");
+    esp_mqtt_client_set_uri(mqtt_client, CONFIG_EXAMPLE_BROKER_SSL_URI);
 
     xEventGroupClearBits(mqtt_event_group, CONNECTED_BIT);
     esp_mqtt_client_start(mqtt_client);
