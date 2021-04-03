@@ -1,0 +1,13 @@
+table {
+    margin-right: 5px;
+}
+
+tr.hovered:hover {
+  color: #ff8c00;
+  cursor: pointer;
+}
+
+div.row-aligned {
+  display: flex;
+  flex-direction: row;
+}

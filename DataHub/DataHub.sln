@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTCommunicationLib", "IoTCommunicationLib\IoTCommunicationLib.csproj", "{6DC8862C-9675-47C4-9184-6E07AA478E08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTCommunicationGui", "IoTCommunicationGui\IoTCommunicationGui.csproj", "{AC84CF4C-01B4-4C39-8440-1A1BF832BF7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTWorkerService", "IoTWorkerService\IoTWorkerService.csproj", "{4868D146-FA32-40AA-8F28-DE7A9A917ADB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbCommunicationLib", "DbCommunicationLib\DbCommunicationLib.csproj", "{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DC8862C-9675-47C4-9184-6E07AA478E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DC8862C-9675-47C4-9184-6E07AA478E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DC8862C-9675-47C4-9184-6E07AA478E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DC8862C-9675-47C4-9184-6E07AA478E08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC84CF4C-01B4-4C39-8440-1A1BF832BF7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC84CF4C-01B4-4C39-8440-1A1BF832BF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC84CF4C-01B4-4C39-8440-1A1BF832BF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC84CF4C-01B4-4C39-8440-1A1BF832BF7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4868D146-FA32-40AA-8F28-DE7A9A917ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4868D146-FA32-40AA-8F28-DE7A9A917ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4868D146-FA32-40AA-8F28-DE7A9A917ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4868D146-FA32-40AA-8F28-DE7A9A917ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {649A889F-00C5-4E69-A130-CA4A209BB724}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,22 @@
+<h3 id="tableLabel">Sensor events</h3>
+
+<p *ngIf="!sensorEvents"><em>Loading...</em></p>
+
+<p *ngIf="!eventsExists">No events found.</p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="sensorEvents && eventsExists">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Type</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sensorEvent of sensorEvents">
+      <td>{{ sensorEvent.eventId }}</td>
+      <td>{{ sensorEvent.eventType }}</td>
+      <td>{{ sensorEvent.eventDateTime }}</td>
+    </tr>
+  </tbody>
+</table>

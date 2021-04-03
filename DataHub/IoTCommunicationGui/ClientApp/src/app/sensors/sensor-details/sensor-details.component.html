@@ -1,0 +1,23 @@
+<table class='table table-striped'>
+  <tr>
+    <td>Name: </td>
+    <td>{{sensor?.name}}</td>
+  </tr>
+  <tr>
+    <td>Description: </td>
+    <td>{{sensor?.description}}</td>
+  </tr>
+  <tr>
+    <td>SensorType: </td>
+    <td>{{sensorType}}</td>
+  </tr>
+  <tr>
+    <td>Is active: </td>
+    <td>{{sensor?.isActive}}</td>
+  </tr>
+  <tr *ngIf="sensor?.inverseOnOffLogic">
+    <td>Inverse logic: </td>
+    <td>{{sensor?.inverseOnOffLogic}}</td>
+  </tr>
+</table>
+<app-sensor-events></app-sensor-events>
