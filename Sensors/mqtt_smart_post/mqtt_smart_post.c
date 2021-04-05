@@ -50,9 +50,6 @@ static int qos_test = 0;
 
 const int ext_wakeup_pin_2 = 4;
 
-#define MESSAGE_LEN 9
-
-
 #if CONFIG_EXAMPLE_BROKER_CERTIFICATE_OVERRIDDEN == 1
 static const uint8_t mqtt_eclipse_org_pem_start[]  = "-----BEGIN CERTIFICATE-----\n" CONFIG_EXAMPLE_BROKER_CERTIFICATE_OVERRIDE "\n-----END CERTIFICATE-----";
 #else
