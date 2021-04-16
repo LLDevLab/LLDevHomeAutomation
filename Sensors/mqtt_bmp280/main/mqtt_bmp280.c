@@ -226,9 +226,9 @@ void app_main(void)
         if(bmp280_read_values(&pressure, &temperature))
         {
             char msg[60];
-            sprintf(msg, "{\"Id\":\"Room1\",\"Value\":\"%.2f\",\"Units\":\"C\"}", temperature);
+            sprintf(msg, "{\"Id\":\"Room1\",\"Value\":\"%.2f\",\"ValueUnit\":\"C\"}", temperature);
             publish_msg(msg, strlen(msg));
-            sprintf(msg, "{\"Id\":\"Room1\",\"Value\":\"%.2f\",\"Units\":\"Pa\"}", pressure);
+            sprintf(msg, "{\"Id\":\"Room1\",\"Value\":\"%.2f\",\"ValueUnit\":\"Pa\"}", pressure);
             publish_msg(msg, strlen(msg));
         }
  
