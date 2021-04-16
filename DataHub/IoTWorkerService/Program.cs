@@ -1,5 +1,4 @@
 using DbCommunicationLib;
-using IoTCommunicationLib;
 using IoTCommunicationLib.IoTSettings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

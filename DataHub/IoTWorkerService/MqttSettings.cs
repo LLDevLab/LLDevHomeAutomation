@@ -12,5 +12,7 @@ namespace IoTWorkerService
         public int Port { get; init; }
 
         public string SubscriptionTopic { get; init; }
+
+        public string ClientId { get; init; }
     }
 }

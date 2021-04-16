@@ -8,6 +8,7 @@ namespace DbCommunicationLib
     {
         readonly IDbContextSettings _options;
 
+        public virtual DbSet<MeasurementUnit> MeasurementUnits { get; set; }
         public virtual DbSet<Sensor> Sensors { get; set; }
         public virtual DbSet<SensorEvent> SensorEvents { get; set; }
 
@@ -30,6 +31,13 @@ namespace DbCommunicationLib
         {
             modelBuilder.HasAnnotation("Relational:Collation", "en_US.UTF-8");
 
+            modelBuilder.Entity<MeasurementUnit>(entity =>
+            {
+                entity.Property(e => e.Unit)
+                    .IsRequired()
+                    .HasMaxLength(10);
+            });
+
             modelBuilder.Entity<Sensor>(entity =>
             {
                 entity.HasIndex(e => e.Name, "SensorName_constraint")
@@ -48,6 +56,8 @@ namespace DbCommunicationLib
 
             modelBuilder.Entity<SensorEvent>(entity =>
             {
+                entity.HasIndex(e => e.UnitId, "SensorEvents_MeasurementUnits_fk");
+
                 entity.HasIndex(e => new { e.SensorId, e.EventDateTime }, "SensorId_EventDateTime_Idx")
                     .HasNullSortOrder(new[] { NullSortOrder.NullsLast, NullSortOrder.NullsLast })
                     .HasSortOrder(new[] { SortOrder.Ascending, SortOrder.Descending });
@@ -61,6 +71,11 @@ namespace DbCommunicationLib
                     .HasForeignKey(d => d.SensorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("SensorEvents_Sensors_fk");
+
+                entity.HasOne(d => d.Unit)
+                    .WithMany(p => p.SensorEvents)
+                    .HasForeignKey(d => d.UnitId)
+                    .HasConstraintName("SensorEvents_UnitId_fkey");
             });
 
             OnModelCreatingPartial(modelBuilder);
