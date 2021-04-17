@@ -3,7 +3,9 @@ using IoTCommunicationLib.Abstractions.Communication;
 using IoTCommunicationLib.Communications.Mqtt;
 using IoTCommunicationLib.IoTSettings;
 using System;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("IoTCommunicationLibTests")]
 namespace IoTCommunicationLib
 {
     public class IoTCommunication: IDisposable

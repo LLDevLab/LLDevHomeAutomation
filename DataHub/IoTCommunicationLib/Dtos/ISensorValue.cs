@@ -4,5 +4,6 @@
     {
         string Id { get; }
         string Value { get; }
+        string ValueUnit { get; }
     }
 }

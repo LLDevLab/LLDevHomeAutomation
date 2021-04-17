@@ -1,9 +1,7 @@
 ﻿using IoTCommunicationLib.Communications.Mqtt;
 using MQTTnet.Protocol;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 using Newtonsoft.Json;
 using IoTCommunicationLib.Dtos;
 
@@ -29,7 +27,11 @@ namespace IoTCommunicationLib.Abstractions.Communication
 
         public Task ConnectAsync() => _client.ConnectAsync();
 
-        public Task SubscribeAsync(string topic, QoSType qualityOfServece) => _client.Subscribe(topic, MapToMqttQualityOfServiceLevel(qualityOfServece));
+        public Task DisconnectAsync() => _client.DisconnectAsync();
+
+        public Task SubscribeAsync(string topic, QoSType qualityOfServece) => _client.SubscribeAsync(topic, MapToMqttQualityOfServiceLevel(qualityOfServece));
+
+        public Task PublishAsync(string topic, string message) => _client.PublishAsync(topic, message);
 
         static MqttQualityOfServiceLevel MapToMqttQualityOfServiceLevel(QoSType qos)
         {

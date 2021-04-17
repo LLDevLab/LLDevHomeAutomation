@@ -6,8 +6,6 @@ using System;
 using MQTTnet.Protocol;
 using System.Threading.Tasks;
 using IoTCommunicationLib.IoTSettings;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 
 namespace IoTCommunicationLib.Communications.Mqtt
 {
@@ -25,7 +23,6 @@ namespace IoTCommunicationLib.Communications.Mqtt
             remove => _messageReceivedHandler.ApplicationMessageReceivedHandler -= value;
         }
 
-        const string mqttClientId = "IoTWorkerService";
         readonly Logger _logger;
 
         IManagedMqttClient _client;
@@ -61,7 +58,7 @@ namespace IoTCommunicationLib.Communications.Mqtt
         IManagedMqttClientOptions GetClientOptions()
         {
             var options = new MqttClientOptionsBuilder()
-                .WithClientId(mqttClientId)
+                .WithClientId(_settings.ClientId)
                 .WithTcpServer(_settings.Uri, _settings.Port)
                 .WithCleanSession();
 
@@ -74,8 +71,10 @@ namespace IoTCommunicationLib.Communications.Mqtt
         }
 
         public Task ConnectAsync() => _client.StartAsync(GetClientOptions());
+        public Task DisconnectAsync() => _client.StopAsync();
 
-        public Task Subscribe(string topic, MqttQualityOfServiceLevel qos) => _client.SubscribeAsync(topic, qos);
+        public Task SubscribeAsync(string topic, MqttQualityOfServiceLevel qos) => _client.SubscribeAsync(topic, qos);
+        public Task PublishAsync(string topic, string message) => _client.PublishAsync(topic, message);
 
         void OnClientConnected(object sender, EventArgs args)
         {

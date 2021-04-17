@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTWorkerService", "IoTWork
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbCommunicationLib", "DbCommunicationLib\DbCommunicationLib.csproj", "{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTCommunicationLibTests", "IoTCommunicationLibTests\IoTCommunicationLibTests.csproj", "{B543DE03-30EC-4B50-8907-FF3EDA896C92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECB600F3-0F40-4E0B-994B-8BE1E6DE66A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B543DE03-30EC-4B50-8907-FF3EDA896C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B543DE03-30EC-4B50-8907-FF3EDA896C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B543DE03-30EC-4B50-8907-FF3EDA896C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B543DE03-30EC-4B50-8907-FF3EDA896C92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
