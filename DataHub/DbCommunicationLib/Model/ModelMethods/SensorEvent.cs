@@ -7,10 +7,16 @@ namespace DbCommunicationLib.Model
     {
         public ISensorEventController GetController()
         {
-            SensorEventControllerBase result = (SensorEventTypes)EventType switch
+            if (UnitId == null)
+                return new OnOffSensorEventController(this);
+
+            var measurementUnits = (MeasurementUnits)UnitId;
+
+            SensorEventControllerBase result = measurementUnits switch
             {
-                SensorEventTypes.On or SensorEventTypes.Off => new OnOffSensorEventController(this),
-                _ => throw new NotImplementedException($"Controller for event type {EventType} is not implemented."),
+                MeasurementUnits.DegreeCelsius => new TemperatureSensorEventController(this),
+                MeasurementUnits.Pascals => new PressureSensorEventController(this),
+                _ => throw new NotImplementedException($"Event type {measurementUnits} not implemented.")
             };
             return result;
         }

@@ -10,25 +10,21 @@ namespace DbCommunicationLib.Controller.Sensors
         {
         }
 
-        bool InverseOnOffLogic => SensorModel.InverseOnOffLogic ?? false;
+        bool InverseLogic => SensorModel.InverseLogic ?? false;
 
         public override ISensorEventController CreateNewEvent(string eventDescription)
         {
-            SensorEventTypes eventType;
-
             if (!bool.TryParse(eventDescription, out var val))
                 throw new ArgumentException($"Cannot convert artument '{eventDescription}' to boolean.");
 
-            if (InverseOnOffLogic)
-                eventType = val == false ? SensorEventTypes.On : SensorEventTypes.Off;
-            else
-                eventType = val == true ? SensorEventTypes.On : SensorEventTypes.Off;
+            if (InverseLogic)
+                val = !val;
 
             var sensorEventModel = new SensorEvent
             {
                 Sensor = SensorModel,
                 EventDateTime = DateTime.Now,
-                EventType = (short)eventType
+                EventBooleanValue = val
             };
 
             return new OnOffSensorEventController(sensorEventModel);

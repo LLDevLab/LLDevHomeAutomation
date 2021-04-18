@@ -13,8 +13,6 @@ namespace DbCommunicationLib.Controller.SensorEvents
 
         DateTime EventDateTime { get; }
 
-        SensorEventTypes EventType { get; }
-
         SensorEventsDto GetDtoObject();
     }
 }

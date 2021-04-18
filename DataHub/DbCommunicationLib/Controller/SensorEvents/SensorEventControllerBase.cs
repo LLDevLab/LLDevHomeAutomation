@@ -19,12 +19,9 @@ namespace DbCommunicationLib.Controller.SensorEvents
 
         public DateTime EventDateTime => SensorEventModel.EventDateTime;
 
-        public SensorEventTypes EventType => (SensorEventTypes)SensorEventModel.EventType;
-
         public SensorEventsDto GetDtoObject() => new()
         {
             EventId = SensorEventModel.Id,
-            EventType = (SensorEventTypes)SensorEventModel.EventType,
             SensorId = SensorEventModel.SensorId,
             EventDateTime = SensorEventModel.EventDateTime
         };

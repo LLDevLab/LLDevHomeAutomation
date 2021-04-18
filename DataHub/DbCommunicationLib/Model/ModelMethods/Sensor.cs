@@ -7,10 +7,13 @@ namespace DbCommunicationLib.Model
     {
         public ISensorController GetController()
         {
-            SensorControllerBase result = (SensorType)Type switch
+            var sensorType = (SensorTypeEnum)SensorType;
+            SensorControllerBase result = sensorType switch
             {
-                SensorType.OnOffSensor => new OnOffSensorController(this),
-                _ => throw new NotImplementedException($"Controller for type {Type} is not implemented.")
+                SensorTypeEnum.OnOffSensor => new OnOffSensorController(this),
+                SensorTypeEnum.Temperature => new TemperatureSensorController(this),
+                SensorTypeEnum.Pressure => new PressureSensorController(this),
+                _ => throw new NotImplementedException($"Controller for type {sensorType} is not implemented.")
             };
 
             return result;

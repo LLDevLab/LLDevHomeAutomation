@@ -20,7 +20,7 @@ namespace DbCommunicationLib.Controller.Sensors
 
         public bool? IsActive => SensorModel.IsActive;
 
-        public SensorType Type => (SensorType)SensorModel.Type;
+        public SensorTypeEnum SensorType => (SensorTypeEnum)SensorModel.SensorType;
 
         public abstract ISensorEventController CreateNewEvent(string eventDescription);
 
@@ -31,9 +31,8 @@ namespace DbCommunicationLib.Controller.Sensors
             Id = SensorModel.Id,
             Name = SensorModel.Name,
             Description = SensorModel.Description,
-            SensorType = (SensorType)SensorModel.Type,
             IsActive = SensorModel.IsActive,
-            InverseOnOffLogic = SensorModel.InverseOnOffLogic
+            InverseOnOffLogic = SensorModel.InverseLogic
         };
     }
 }

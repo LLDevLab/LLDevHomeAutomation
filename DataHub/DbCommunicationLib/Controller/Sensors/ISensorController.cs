@@ -16,7 +16,7 @@ namespace DbCommunicationLib.Controller.Sensors
 
         bool? IsActive { get; }
 
-        SensorType Type { get; }
+        SensorTypeEnum SensorType { get; }
 
         ISensorEventController CreateNewEvent(string eventDescription);
         SensorsDto GetDtoObject();

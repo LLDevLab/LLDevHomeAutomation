@@ -1,23 +1,21 @@
 ﻿namespace DbCommunicationLib
 {
-    /// <summary>
-    /// Bit masked type
-    /// </summary>
-    public enum SensorType
+    public enum SensorTypeEnum
     {
-        Undefined = 0,
-        OnOffSensor = 1,
-        Temperature = 2,
-        Pressure = 4
+        OnOffSensor = 0,
+        Temperature = 1,
+        Pressure = 2
     }
 
-    /// <summary>
-    /// Type of event
-    /// </summary>
-    public enum SensorEventTypes
+    public enum OnOffEventValue
     {
-        Measurement = 0,
-        On = 1,
-        Off = 2
+        On = 0,
+        Off = 1
+    }
+
+    public enum MeasurementUnits
+    {
+        DegreeCelsius = 1,
+        Pascals = 2
     }
 }
