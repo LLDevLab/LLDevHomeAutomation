@@ -7,16 +7,14 @@ namespace DbCommunicationLib.Model
     {
         public ISensorEventController GetController()
         {
-            if (UnitId == null)
-                return new OnOffSensorEventController(this);
+            var sensorTypeEnum = (SensorTypeEnum)Sensor.SensorType;
 
-            var measurementUnits = (MeasurementUnits)UnitId;
-
-            SensorEventControllerBase result = measurementUnits switch
+            SensorEventControllerBase result = sensorTypeEnum switch
             {
-                MeasurementUnits.DegreeCelsius => new TemperatureSensorEventController(this),
-                MeasurementUnits.Pascals => new PressureSensorEventController(this),
-                _ => throw new NotImplementedException($"Event type {measurementUnits} not implemented.")
+                SensorTypeEnum.OnOffSensor => new OnOffSensorEventController(this),
+                SensorTypeEnum.Temperature => new TemperatureSensorEventController(this),
+                SensorTypeEnum.Pressure => new PressureSensorEventController(this),
+                _ => throw new NotImplementedException($"Sensor type {sensorTypeEnum} not implemented.")
             };
             return result;
         }

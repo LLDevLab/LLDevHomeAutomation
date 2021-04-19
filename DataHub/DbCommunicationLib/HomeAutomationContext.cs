@@ -37,6 +37,8 @@ namespace DbCommunicationLib
                 entity.HasIndex(e => e.Unit, "MeasurementUnits_Unit_constraint")
                     .IsUnique();
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Unit)
                     .IsRequired()
                     .HasMaxLength(10);
@@ -46,6 +48,8 @@ namespace DbCommunicationLib
             {
                 entity.HasIndex(e => e.Name, "Sensors_Name_constraint")
                     .IsUnique();
+
+                entity.HasIndex(e => e.UnitId, "fki_Sensors_MeasurementUnits_fk");
 
                 entity.HasIndex(e => e.SensorType, "fki_Sensors_SensorTypes_fk");
 
@@ -64,12 +68,15 @@ namespace DbCommunicationLib
                     .HasForeignKey(d => d.SensorType)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Sensors_SensorTypes_fk");
+
+                entity.HasOne(d => d.Unit)
+                    .WithMany(p => p.Sensors)
+                    .HasForeignKey(d => d.UnitId)
+                    .HasConstraintName("Sensors_MeasurementUnits_fk");
             });
 
             modelBuilder.Entity<SensorEvent>(entity =>
             {
-                entity.HasIndex(e => e.UnitId, "SensorEvents_MeasurementUnits_fk");
-
                 entity.HasIndex(e => new { e.SensorId, e.EventDateTime }, "SensorId_EventDateTime_Idx")
                     .HasNullSortOrder(new[] { NullSortOrder.NullsLast, NullSortOrder.NullsLast })
                     .HasSortOrder(new[] { SortOrder.Ascending, SortOrder.Descending });
@@ -83,11 +90,6 @@ namespace DbCommunicationLib
                     .HasForeignKey(d => d.SensorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("SensorEvents_Sensors_fk");
-
-                entity.HasOne(d => d.Unit)
-                    .WithMany(p => p.SensorEvents)
-                    .HasForeignKey(d => d.UnitId)
-                    .HasConstraintName("SensorEvents_UnitId_fkey");
             });
 
             modelBuilder.Entity<SensorType>(entity =>

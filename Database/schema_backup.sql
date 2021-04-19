@@ -5,7 +5,7 @@
 -- Dumped from database version 10.16 (Ubuntu 10.16-0ubuntu0.18.04.1)
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-04-18 18:45:26
+-- Started on 2021-04-19 20:46:18
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -42,8 +42,7 @@ CREATE TABLE public."SensorEvents" (
     "Id" bigint NOT NULL,
     "SensorId" integer NOT NULL,
     "EventDateTime" timestamp with time zone NOT NULL,
-    "EventFloatValue" real,
-    "UnitId" smallint,
+    "EventDoubleValue" double precision,
     "EventBooleanValue" boolean
 );
 
@@ -98,7 +97,8 @@ CREATE TABLE public."Sensors" (
     "IsActive" boolean DEFAULT true NOT NULL,
     "Name" character varying(25) NOT NULL,
     "InverseLogic" boolean,
-    "SensorType" smallint NOT NULL
+    "SensorType" smallint NOT NULL,
+    "UnitId" smallint
 );
 
 
@@ -164,7 +164,7 @@ ALTER TABLE ONLY public."MeasurementUnits"
 
 
 --
--- TOC entry 2770 (class 2606 OID 16624)
+-- TOC entry 2769 (class 2606 OID 16624)
 -- Name: SensorEvents SensorEvents_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -191,7 +191,7 @@ ALTER TABLE ONLY public."SensorTypes"
 
 
 --
--- TOC entry 2774 (class 2606 OID 16626)
+-- TOC entry 2773 (class 2606 OID 16626)
 -- Name: Sensors Sensors_Name_constraint; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -200,7 +200,7 @@ ALTER TABLE ONLY public."Sensors"
 
 
 --
--- TOC entry 2776 (class 2606 OID 16628)
+-- TOC entry 2775 (class 2606 OID 16628)
 -- Name: Sensors Sensors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -209,15 +209,7 @@ ALTER TABLE ONLY public."Sensors"
 
 
 --
--- TOC entry 2768 (class 1259 OID 16649)
--- Name: SensorEvents_MeasurementUnits_fk; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX "SensorEvents_MeasurementUnits_fk" ON public."SensorEvents" USING btree ("UnitId");
-
-
---
--- TOC entry 2771 (class 1259 OID 16629)
+-- TOC entry 2770 (class 1259 OID 16629)
 -- Name: SensorId_EventDateTime_Idx; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -227,11 +219,19 @@ ALTER TABLE public."SensorEvents" CLUSTER ON "SensorId_EventDateTime_Idx";
 
 
 --
--- TOC entry 2772 (class 1259 OID 16630)
+-- TOC entry 2771 (class 1259 OID 16630)
 -- Name: fki_SensorEvents_Sensors_fk; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE INDEX "fki_SensorEvents_Sensors_fk" ON public."SensorEvents" USING btree ("SensorId");
+
+
+--
+-- TOC entry 2776 (class 1259 OID 16694)
+-- Name: fki_Sensors_MeasurementUnits_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "fki_Sensors_MeasurementUnits_fk" ON public."Sensors" USING btree ("UnitId");
 
 
 --
@@ -252,16 +252,16 @@ ALTER TABLE ONLY public."SensorEvents"
 
 
 --
--- TOC entry 2787 (class 2606 OID 16644)
--- Name: SensorEvents SensorEvents_UnitId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2788 (class 2606 OID 16689)
+-- Name: Sensors Sensors_MeasurementUnits_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."SensorEvents"
-    ADD CONSTRAINT "SensorEvents_UnitId_fkey" FOREIGN KEY ("UnitId") REFERENCES public."MeasurementUnits"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public."Sensors"
+    ADD CONSTRAINT "Sensors_MeasurementUnits_fk" FOREIGN KEY ("UnitId") REFERENCES public."MeasurementUnits"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- TOC entry 2788 (class 2606 OID 16676)
+-- TOC entry 2787 (class 2606 OID 16676)
 -- Name: Sensors Sensors_SensorTypes_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -269,7 +269,7 @@ ALTER TABLE ONLY public."Sensors"
     ADD CONSTRAINT "Sensors_SensorTypes_fk" FOREIGN KEY ("SensorType") REFERENCES public."SensorTypes"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
--- Completed on 2021-04-18 18:45:27
+-- Completed on 2021-04-19 20:46:19
 
 --
 -- PostgreSQL database dump complete

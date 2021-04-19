@@ -46,10 +46,12 @@ namespace IoTWorkerService
 
         void OnSensorMessageReceived(object sender, SensorMessageEventArgs eventArgs)
         {
-            var sensorName = eventArgs.SensorValue.Id;
-            var sensorValue = eventArgs.SensorValue.Value;
+            var sensorValue = eventArgs.SensorValue;
+            var sensorName = sensorValue.Id;
+            var value = sensorValue.Value;
+            var valueUnit = sensorValue.ValueUnit;
 
-            _logger.LogInformation("Message received: {time}, {sensorName}, {value}", DateTimeOffset.Now, sensorName, sensorValue);
+            _logger.LogInformation("Message received: {time}, {sensorName}, {value}, {valueUnit}", DateTimeOffset.Now, sensorName, value, valueUnit ?? string.Empty);
 
             var SensorModel = (from sensors in _context.Sensors
              where sensors.Name == sensorName
@@ -59,7 +61,7 @@ namespace IoTWorkerService
                 return;
 
             var controller = SensorModel.GetController();
-            var sensorEvent = controller.CreateNewEvent(sensorValue);
+            var sensorEvent = controller.CreateNewEvent(value);
 
             _context.SensorEvents.Add(sensorEvent.SensorEventModel);
             _context.SaveChanges();

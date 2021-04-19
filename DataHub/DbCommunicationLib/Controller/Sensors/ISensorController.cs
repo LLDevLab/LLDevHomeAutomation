@@ -1,7 +1,6 @@
 ﻿using DbCommunicationLib.Controller.SensorEvents;
 using DbCommunicationLib.Dto;
 using DbCommunicationLib.Model;
-using System.Collections.Generic;
 
 namespace DbCommunicationLib.Controller.Sensors
 {
@@ -18,7 +17,7 @@ namespace DbCommunicationLib.Controller.Sensors
 
         SensorTypeEnum SensorType { get; }
 
-        ISensorEventController CreateNewEvent(string eventDescription);
+        ISensorEventController CreateNewEvent(string sensorValue);
         SensorsDto GetDtoObject();
     }
 }

@@ -4,7 +4,7 @@ using System;
 
 namespace DbCommunicationLib.Controller.Sensors
 {
-    class TemperatureSensorController: FloatSensorController
+    class TemperatureSensorController: DoubleSensorController
     {
         public TemperatureSensorController(Sensor sensorModel) : base(sensorModel)
         {

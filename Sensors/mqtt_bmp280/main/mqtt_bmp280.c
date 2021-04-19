@@ -225,13 +225,14 @@ void app_main(void)
         float temperature = 0;
         if(bmp280_read_values(&pressure, &temperature))
         {
-            char msg[60];
-            sprintf(msg, "{\"Id\":\"Room1\",\"Value\":\"%.2f\",\"ValueUnit\":\"C\"}", temperature);
+            char msg[80];
+            sprintf(msg, "{\"Id\":\"PcRoomTemp\",\"Value\":\"%.2f\",\"ValueUnit\":\"C\"}", temperature);
             publish_msg(msg, strlen(msg));
-            sprintf(msg, "{\"Id\":\"Room1\",\"Value\":\"%.2f\",\"ValueUnit\":\"Pa\"}", pressure);
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+            sprintf(msg, "{\"Id\":\"PcRoomPress\",\"Value\":\"%.2f\",\"ValueUnit\":\"Pa\"}", pressure);
             publish_msg(msg, strlen(msg));
         }
  
-        go_to_sleep(10);
+        go_to_sleep(30);
     }
 }

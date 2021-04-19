@@ -3,7 +3,7 @@ using DbCommunicationLib.Model;
 
 namespace DbCommunicationLib.Controller.Sensors
 {
-    class PressureSensorController: FloatSensorController
+    class PressureSensorController: DoubleSensorController
     {
         public PressureSensorController(Sensor sensorModel) : base(sensorModel)
         {

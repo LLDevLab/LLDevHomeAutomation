@@ -22,9 +22,9 @@ namespace DbCommunicationLib.Controller.Sensors
 
         public SensorTypeEnum SensorType => (SensorTypeEnum)SensorModel.SensorType;
 
-        public abstract ISensorEventController CreateNewEvent(string eventDescription);
+        public abstract ISensorEventController CreateNewEvent(string sensorValue);
 
-        ISensorEventController ISensorController.CreateNewEvent(string eventDescription) => CreateNewEvent(eventDescription);
+        ISensorEventController ISensorController.CreateNewEvent(string sensorValue) => CreateNewEvent(sensorValue);
 
         public SensorsDto GetDtoObject() => new()
         {

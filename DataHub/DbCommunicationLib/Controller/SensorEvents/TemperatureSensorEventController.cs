@@ -2,7 +2,7 @@
 
 namespace DbCommunicationLib.Controller.SensorEvents
 {
-    class TemperatureSensorEventController: FloatSensorEventController
+    class TemperatureSensorEventController: DoubleSensorEventController
     {
         public TemperatureSensorEventController(SensorEvent sensorEventModel) : base(sensorEventModel)
         {
