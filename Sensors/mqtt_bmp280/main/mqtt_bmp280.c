@@ -233,6 +233,6 @@ void app_main(void)
             publish_msg(msg, strlen(msg));
         }
  
-        go_to_sleep(30);
+        go_to_sleep(900);
     }
 }
