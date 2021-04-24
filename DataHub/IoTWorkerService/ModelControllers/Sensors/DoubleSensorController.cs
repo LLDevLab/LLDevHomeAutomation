@@ -6,11 +6,14 @@ namespace DbCommunicationLib.Controller.Sensors
 {
     abstract class DoubleSensorController: SensorControllerBase
     {
-
-        protected SensorEvent CreateSensorEvent(string eventDescription)
+        public DoubleSensorController(Sensor sensorModel, HomeAutomationContext dbContext) : base(sensorModel, dbContext)
         {
-            if (!float.TryParse(eventDescription, NumberStyles.Float, CultureInfo.InvariantCulture, out var val))
-                throw new ArgumentException($"Cannot convert artument '{eventDescription}' to float.");
+        }
+
+        protected SensorEvent CreateSensorEvent(string eventValue)
+        {
+            if (!float.TryParse(eventValue, NumberStyles.Float, CultureInfo.InvariantCulture, out var val))
+                throw new ArgumentException($"Cannot convert artument '{eventValue}' to float.");
 
             return new SensorEvent
             {
@@ -18,10 +21,6 @@ namespace DbCommunicationLib.Controller.Sensors
                 EventDateTime = DateTime.Now,
                 EventDoubleValue = val
             };
-        }
-
-        public DoubleSensorController(Sensor sensorModel) : base(sensorModel)
-        {
         }
     }
 }

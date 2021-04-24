@@ -4,7 +4,7 @@ namespace DbCommunicationLib.Controller.SensorEvents
 {
     class PressureSensorEventController: DoubleSensorEventController
     {
-        public PressureSensorEventController(SensorEvent sensorEventModel) : base(sensorEventModel)
+        public PressureSensorEventController(SensorEvent sensorEventModel, HomeAutomationContext dbContext) : base(sensorEventModel, dbContext)
         {
         }
     }

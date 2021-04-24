@@ -6,13 +6,12 @@ namespace DbCommunicationLib.Controller.Sensors
 {
     class OnOffSensorController: SensorControllerBase
     {
-        public OnOffSensorController(Sensor sensorModel) : base(sensorModel)
+        public bool InverseLogic => SensorModel.InverseLogic ?? false;
+
+        public OnOffSensorController(Sensor sensorModel, HomeAutomationContext dbContext) : base(sensorModel, dbContext)
         {
         }
-
-        bool InverseLogic => SensorModel.InverseLogic ?? false;
-
-        public override ISensorEventController CreateNewEvent(string eventDescription)
+        public override SensorEventControllerBase CreateEventController(string eventDescription)
         {
             if (!bool.TryParse(eventDescription, out var val))
                 throw new ArgumentException($"Cannot convert artument '{eventDescription}' to boolean.");
@@ -27,7 +26,7 @@ namespace DbCommunicationLib.Controller.Sensors
                 EventBooleanValue = val
             };
 
-            return new OnOffSensorEventController(sensorEventModel);
+            return new OnOffSensorEventController(sensorEventModel, DbContext);
         }
     }
 }

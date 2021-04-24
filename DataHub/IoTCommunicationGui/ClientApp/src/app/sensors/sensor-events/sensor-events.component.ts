@@ -11,8 +11,19 @@ import { SensorEvents } from '../../interfaces/sensor-events';
 export class SensorEventsComponent implements OnInit {
   public sensorEvents: SensorEvents[];
   public eventsExists: boolean;
+  public eventValue: string;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private activatedRoute: ActivatedRoute) { }
+
+  public getEventValue(event: SensorEvents): string {
+    let result = 'Undefined';
+    if (event.eventBooleanValue !== null)
+      result = event.eventBooleanValue ? 'On' : 'Off';
+    else if (event.eventDoubleValue !== null)
+      result = this.roundNum(event.eventDoubleValue).toString();
+
+    return result;
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(routeParams => {
@@ -25,5 +36,9 @@ export class SensorEventsComponent implements OnInit {
       this.sensorEvents = result;
       this.eventsExists = this.sensorEvents.length > 0;
     }, error => console.error(error));
+  }
+
+  roundNum(num: number): number {
+    return Math.round(num * 100) / 100;
   }
 }

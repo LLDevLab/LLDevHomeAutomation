@@ -6,26 +6,18 @@ namespace DbCommunicationLib
 {
     public partial class HomeAutomationContext : DbContext
     {
-        readonly IDbContextSettings _options;
-
         public virtual DbSet<MeasurementUnit> MeasurementUnits { get; set; }
         public virtual DbSet<Sensor> Sensors { get; set; }
         public virtual DbSet<SensorEvent> SensorEvents { get; set; }
         public virtual DbSet<SensorType> SensorTypes { get; set; }
 
-        public HomeAutomationContext(IDbContextSettings options) : base()
+        public HomeAutomationContext() : base()
         {
-            _options = options;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public HomeAutomationContext(DbContextOptions<HomeAutomationContext> options)
+            : base(options)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder
-                    .UseLazyLoadingProxies()
-                    .UseNpgsql($"Host={_options.Host};Database={_options.Database};Username={_options.UserName};Password={_options.Password}");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

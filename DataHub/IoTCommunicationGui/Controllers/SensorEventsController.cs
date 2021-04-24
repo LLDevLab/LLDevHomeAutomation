@@ -1,5 +1,5 @@
 ﻿using DbCommunicationLib;
-using DbCommunicationLib.Dto;
+using DbCommunicationLib.Model.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -13,23 +13,21 @@ namespace IoTCommunicationGui.Controllers
     {
         readonly ILogger<SensorsOverviewController> _logger;
         readonly HomeAutomationContext _context;
-        public SensorEventsController(ILogger<SensorsOverviewController> logger, IDbContextSettings options)
+        public SensorEventsController(ILogger<SensorsOverviewController> logger, HomeAutomationContext context)
         {
             _logger = logger;
-            _context = new HomeAutomationContext(options);
+            _context = context;
         }
 
         [HttpGet("{sensorId:int}")]
-        public IEnumerable<SensorEventsDto> Get(int sensorId)
+        public IEnumerable<ISensorEvent> Get(int sensorId)
         {
             var list = (from sensorEvent in _context.SensorEvents
                         where sensorEvent.SensorId == sensorId
                         orderby sensorEvent.EventDateTime descending
                         select sensorEvent).Take(5);
 
-            var result = list.Select(x => x.GetController().GetDtoObject());
-
-            return result;
+            return list;
         }
     }
 }

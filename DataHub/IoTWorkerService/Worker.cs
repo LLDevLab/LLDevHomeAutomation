@@ -1,12 +1,13 @@
 using DbCommunicationLib;
+using DbCommunicationLib.Controller.Sensors;
 using IoTCommunicationLib;
 using IoTCommunicationLib.Abstractions;
 using IoTCommunicationLib.IoTSettings;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,14 +19,16 @@ namespace IoTWorkerService
         readonly IoTCommunication _IoTCommunication;
 
         IClient IoTClient => _IoTCommunication.Client;
-        readonly HomeAutomationContext _context;
+        //readonly HomeAutomationContext _dbContext;
         readonly ICommunicationSettings _mqttSettings;
+        readonly IServiceScopeFactory _scopeFactory;
 
-        public Worker(ILogger<Worker> logger, IDbContextSettings dbSettings, ICommunicationSettings mqttSettings)
+        public Worker(ILogger<Worker> logger, /*HomeAutomationContext dbContext,*/ ICommunicationSettings mqttSettings, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _mqttSettings = mqttSettings;
-            _context = new HomeAutomationContext(dbSettings);
+            //_dbContext = dbContext;
+            _scopeFactory = scopeFactory;
             _IoTCommunication = new IoTCommunication(mqttSettings);
             IoTClient.SensorMessageReceived += OnSensorMessageReceived;
             IoTClient.ClientConnectedEventHandler += OnClientConnected;
@@ -53,18 +56,19 @@ namespace IoTWorkerService
 
             _logger.LogInformation("Message received: {time}, {sensorName}, {value}, {valueUnit}", DateTimeOffset.Now, sensorName, value, valueUnit ?? string.Empty);
 
-            var SensorModel = (from sensors in _context.Sensors
-             where sensors.Name == sensorName
-             select sensors).FirstOrDefault();
+            using var scope = _scopeFactory.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<HomeAutomationContext>();
+            var SensorModel = (from sensors in dbContext.Sensors
+                               where sensors.Name == sensorName
+                               select sensors).FirstOrDefault();
 
             if (SensorModel == null)
                 return;
 
-            var controller = SensorModel.GetController();
-            var sensorEvent = controller.CreateNewEvent(value);
+            var sensor = SensorControllerBase.CreateSensorController(SensorModel, dbContext);
+            var sensorEvent = sensor.CreateEventController(value);
 
-            _context.SensorEvents.Add(sensorEvent.SensorEventModel);
-            _context.SaveChanges();
+            sensorEvent.Save();
         }
     }
 }

@@ -8,15 +8,15 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>Type</th>
+      <th>Value</th>
       <th>Date</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let sensorEvent of sensorEvents">
-      <td>{{ sensorEvent.eventId }}</td>
-      <td>{{ sensorEvent.eventType }}</td>
-      <td>{{ sensorEvent.eventDateTime }}</td>
+      <td>{{ sensorEvent.id }}</td>
+      <td>{{ getEventValue(sensorEvent) }}</td>
+      <td>{{ sensorEvent.eventDateTime | date:'medium' }}</td>
     </tr>
   </tbody>
 </table>

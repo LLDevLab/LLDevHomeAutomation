@@ -1,6 +1,7 @@
 export interface SensorEvents {
-  eventId: number;
-  eventType: string;
+  id: number;
   sensorId: number;
   eventDateTime: Date;
+  eventDoubleValue: number;
+  eventBooleanValue: boolean;
 }

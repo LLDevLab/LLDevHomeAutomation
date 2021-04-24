@@ -12,12 +12,16 @@
     <td>{{sensorType}}</td>
   </tr>
   <tr>
+    <td>UnitType: </td>
+    <td>{{unitType}}</td>
+  </tr>
+  <tr>
     <td>Is active: </td>
     <td>{{sensor?.isActive}}</td>
   </tr>
-  <tr *ngIf="sensor?.inverseOnOffLogic">
+  <tr *ngIf="sensor?.inverseLogic">
     <td>Inverse logic: </td>
-    <td>{{sensor?.inverseOnOffLogic}}</td>
+    <td>{{sensor?.inverseLogic}}</td>
   </tr>
 </table>
 <app-sensor-events></app-sensor-events>

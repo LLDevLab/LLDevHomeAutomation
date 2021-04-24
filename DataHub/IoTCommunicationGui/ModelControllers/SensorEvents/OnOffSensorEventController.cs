@@ -9,7 +9,7 @@ namespace DbCommunicationLib.Controller.SensorEvents
         {
             get
             {
-                var result = Sensor.InverseLogic != true ? SensorEventModel.EventBooleanValue : !SensorEventModel.EventBooleanValue;
+                var result = SensorEventModel.Sensor.InverseLogic != true ? SensorEventModel.EventBooleanValue : !SensorEventModel.EventBooleanValue;
 
                 if (result == null)
                     throw new ArgumentNullException();
@@ -18,7 +18,9 @@ namespace DbCommunicationLib.Controller.SensorEvents
             }
         }
 
-        public OnOffSensorEventController(SensorEvent sensorEventModel) : base(sensorEventModel)
+        protected override string SensorValue => EventValue.ToString();
+
+        public OnOffSensorEventController(SensorEvent sensorEventModel, HomeAutomationContext dbContext) : base(sensorEventModel, dbContext)
         {
         }
     }

@@ -3,6 +3,7 @@ using IoTCommunicationLib.IoTSettings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace IoTWorkerService
 {
@@ -18,12 +19,10 @@ namespace IoTWorkerService
                 .ConfigureServices((hostContext, services) =>
                 {
                     var configuration = hostContext.Configuration;
-
-                    var sqlWorkerOptions = configuration.GetSection("SqlWorkerOptions").Get<SqlServerSettings>();
+                    var connectionString = configuration.GetConnectionString("HomeAutomation");
                     var mqttWorkerSettings = configuration.GetSection("MqttOptions").Get<MqttSettings>();
                     services.AddSingleton(mqttWorkerSettings as ICommunicationSettings);
-                    services.AddSingleton(sqlWorkerOptions as IDbContextSettings);
-                    services.AddDbContext<HomeAutomationContext>();
+                    services.AddDbContext<HomeAutomationContext>(options => options.UseNpgsql(connectionString));
                     services.AddHostedService<Worker>();
                 });
     }

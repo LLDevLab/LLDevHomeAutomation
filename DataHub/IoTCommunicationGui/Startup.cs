@@ -1,12 +1,11 @@
 using DbCommunicationLib;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace IoTCommunicationGui
 {
@@ -22,9 +21,11 @@ namespace IoTCommunicationGui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var sqlWorkerOptions = Configuration.GetSection("SqlWorkerOptions").Get<SqlServerOptions>();
-            services.AddSingleton(sqlWorkerOptions as IDbContextSettings);
-            services.AddDbContext<HomeAutomationContext>();
+            var connectionString = Configuration.GetConnectionString("HomeAutomation");
+            services.AddDbContext<HomeAutomationContext>(options => 
+            {
+                options.UseNpgsql(connectionString);
+            });
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory

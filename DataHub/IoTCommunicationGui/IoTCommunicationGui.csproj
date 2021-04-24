@@ -11,6 +11,7 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>b3bcf5ce-2fa4-446b-9068-86355f0af321</UserSecretsId>
+    <AssemblyName>IoTCommunicationGui</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

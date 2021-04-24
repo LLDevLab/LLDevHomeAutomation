@@ -3,7 +3,7 @@ using System;
 
 namespace DbCommunicationLib.Controller.SensorEvents
 {
-    abstract class DoubleSensorEventController: SensorEventControllerBase
+    class DoubleSensorEventController: SensorEventControllerBase
     {
         public double EventValue
         {
@@ -16,7 +16,10 @@ namespace DbCommunicationLib.Controller.SensorEvents
                 return val.Value;
             }
         }
-        public DoubleSensorEventController(SensorEvent sensorEventModel) : base(sensorEventModel)
+
+        protected override string SensorValue => EventValue.ToString();
+
+        protected DoubleSensorEventController(SensorEvent sensorEventModel, HomeAutomationContext dbContext) : base(sensorEventModel, dbContext)
         {
         }
     }
