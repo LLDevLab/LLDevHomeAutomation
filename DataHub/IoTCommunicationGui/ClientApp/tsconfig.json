@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "module": "esnext",
+    "module": "ES2020",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -15,7 +15,7 @@
     ],
     "lib": [
       "ES2020",
-      "dom"
+      "DOM"
     ]
   }
 }

@@ -1,6 +1,7 @@
 {
   "name": "iotcommunicationgui",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -21,24 +22,25 @@
     "@angular/platform-browser-dynamic": "11.2.11",
     "@angular/platform-server": "11.2.11",
     "@angular/router": "11.2.11",
+    "@angular/material": "11.2.11",
+    "@angular/cdk": "11.2.11",
     "aspnet-prerendering": "^3.0.1",
-    "bootstrap": "^4.3.1",
-    "core-js": "^3.3.3",
-    "jquery": "3.4.1",
+    "bootstrap": "^4.6.0",
+    "core-js": "^3.11.1",
+    "jquery": "3.6.0",
     "oidc-client": "^1.9.1",
-    "popper.js": "^1.16.0",
+    "popper.js": "^1.16.1",
     "rxjs": "^6.5.3",
     "zone.js": "0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1102.10",
-    "@angular/cli": "^11.2.10",
-    "@angular/compiler-cli": "^11.2.11",
-    "@angular/language-service": "^11.2.11",
+    "@angular-devkit/build-angular": "0.1102.11",
+    "@angular/cli": "11.2.11",
+    "@angular/compiler-cli": "11.2.11",
+    "@angular/language-service": "11.2.11",
     "@types/jasmine": "~3.6.10",
     "@types/jasminewd2": "~2.0.8",
-    "@types/node": "~14.14.41",
-    "codelyzer": "^6.0.1",
+    "@types/node": "~15.0.1",
     "jasmine-core": "~3.7.1",
     "jasmine-spec-reporter": "~7.0.0",
     "karma": "^6.3.2",
@@ -49,7 +51,7 @@
     "typescript": "4.0.7"
   },
   "optionalDependencies": {
-    "sass": "^1.32.11",
+    "sass": "^1.32.12",
     "protractor": "~7.0.0",
     "ts-node": "~9.1.1",
     "eslint": "~7.25.0"
