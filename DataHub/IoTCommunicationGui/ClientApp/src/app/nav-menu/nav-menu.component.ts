@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { SensorDetails } from '../interfaces/sensor-details';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,13 +9,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
+  public sensors: SensorDetails[];
 
-  collapse() {
-    this.isExpanded = false;
-  }
-
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    http.get<SensorDetails[]>(baseUrl + 'sensorsoverview').subscribe(result => {
+      this.sensors = result;
+    }, error => console.error(error));
   }
 }
