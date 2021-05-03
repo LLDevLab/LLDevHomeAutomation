@@ -1,11 +1,19 @@
-.menu-container {
-  background: #eee;
-  min-height: 400px;
+.sidenav-main {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 60px;
 }
 
-.test-menu-container {
-  height: 100%;
+.sidenav-menu-container {
   width: 200px;
-  border: 3px solid #73AD21;
-  background: #eee;
+  flex: 1;
+}
+
+.sidenav-content-container {
+  min-height: 500px;
 }

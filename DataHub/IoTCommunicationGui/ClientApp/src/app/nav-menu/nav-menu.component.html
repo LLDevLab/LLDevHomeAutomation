@@ -1,10 +1,10 @@
 <p *ngIf="!sensors"><em>Loading...</em></p>
 
-<mat-list *ngIf="sensors">
+<mat-selection-list *ngIf="sensors" [multiple]="false">
   <mat-list-item>
     <h2>Sensors</h2>
   </mat-list-item>
-  <mat-list-item *ngFor="let sensor of sensors">
+  <mat-list-option *ngFor="let sensor of sensors" [value]="sensor">
     <a class="nav-link text-dark" routerLink="fetch-sensordetails/{{sensor.id}}">{{sensor.name}}</a>
-  </mat-list-item>
-</mat-list>
+  </mat-list-option>
+</mat-selection-list>
