@@ -1,31 +1,20 @@
 <mat-tab-group>
   <mat-tab label="Details">
     <ng-template matTabContent>
-      <table class='table table-striped'>
+      <table mat-table [dataSource]="sensorFields" class="mat-elevation-z8">
         <tr>
-          <td>Name: </td>
-          <td>{{sensor?.name}}</td>
+          <ng-container matColumnDef="label">
+            <th mat-header-cell *matHeaderCellDef hidden> Label </th>
+            <td mat-cell *matCellDef="let field"> {{field.label}} </td>
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef hidden> Value </th>
+            <td mat-cell *matCellDef="let field"> {{field.value}} </td>
+          </ng-container>
         </tr>
-        <tr>
-          <td>Description: </td>
-          <td>{{sensor?.description}}</td>
-        </tr>
-        <tr>
-          <td>SensorType: </td>
-          <td>{{sensorType}}</td>
-        </tr>
-        <tr>
-          <td>UnitType: </td>
-          <td>{{unitType}}</td>
-        </tr>
-        <tr>
-          <td>Is active: </td>
-          <td>{{sensor?.isActive}}</td>
-        </tr>
-        <tr *ngIf="sensor?.inverseLogic">
-          <td>Inverse logic: </td>
-          <td>{{sensor?.inverseLogic}}</td>
-        </tr>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </ng-template>
   </mat-tab>
