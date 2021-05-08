@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { SensorDetails } from '../interfaces/sensor-details';
+import { SensorDetails } from '../interfaces';
 
 @Component({
   selector: 'app-nav-menu',

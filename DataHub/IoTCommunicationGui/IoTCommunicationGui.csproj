@@ -31,9 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\enums\Enums.ts" />
-    <None Remove="ClientApp\src\app\interfaces\sensor-details.ts" />
-    <None Remove="ClientApp\src\app\interfaces\sensor-events.ts" />
     <None Remove="ClientApp\src\app\sensors\home_automation.ts" />
   </ItemGroup>
 

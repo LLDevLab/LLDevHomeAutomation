@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { SensorType, UnitType } from '../../enums/enums';
-import { SensorDetails } from '../../interfaces/sensor-details';
+import { SensorType, UnitType } from '../../enums';
+import { SensorDetails } from '../../interfaces';
 
 export interface SensorFields {
   label: string;
@@ -15,32 +13,27 @@ export interface SensorFields {
   templateUrl: './sensor-details.component.html',
   styleUrls: ['./sensor-details.component.css']
 })
-export class SensorDetailsComponent implements OnInit {
+export class SensorDetailsComponent implements OnChanges {
 
-  public sensor: SensorDetails;
+  @Input() sensor: SensorDetails;
+
   public sensorType: string;
   public unitType: string;
 
   displayedColumns: string[] = ['label', 'value'];
   sensorFields: SensorFields[];
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private activatedroute: ActivatedRoute) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.activatedroute.params.subscribe(routeParams => {
-      this.loadSensorDetail(routeParams.id);
-    });
-  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (typeof changes.sensor.currentValue === "undefined")
+      return;
 
-  loadSensorDetail(sensorId: string) {
-    this.http.get<SensorDetails>(this.baseUrl + 'sensordetails/' + sensorId).subscribe(result => {
-      this.sensor = result;
-      this.sensorType = SensorType[result.sensorType];
-      this.unitType = result.unitId === null ? 'Undefined' : UnitType[result.unitId];
+    this.sensorType = SensorType[this.sensor.sensorType];
+    this.unitType = this.sensor.unitId === null ? 'Undefined' : UnitType[this.sensor.unitId];
 
-      this.sensorFields = [];
-      this.initSensorFields();
-    }, error => console.error(error));
+    this.sensorFields = [];
+    this.initSensorFields();
   }
 
   initSensorFields() {

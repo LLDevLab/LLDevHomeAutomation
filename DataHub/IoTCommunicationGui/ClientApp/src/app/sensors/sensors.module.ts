@@ -7,15 +7,19 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 import { SensorEventsComponent } from './sensor-events/sensor-events.component';
 import { SensorDetailsComponent } from './sensor-details/sensor-details.component';
 import { SensorTabsComponent } from './sensor-tabs/sensor-tabs.component';
+import { SensorLineChartComponent } from './sensor-line-chart/sensor-line-chart.component';
 
 @NgModule({
   declarations: [
     SensorEventsComponent,
     SensorDetailsComponent,
-    SensorTabsComponent
+    SensorTabsComponent,
+    SensorLineChartComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,8 @@ import { SensorTabsComponent } from './sensor-tabs/sensor-tabs.component';
     ]),
     MatTabsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgxChartsModule
   ],
   exports: [RouterModule]
 })

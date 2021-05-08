@@ -1,12 +1,17 @@
 <mat-tab-group>
   <mat-tab label="Details">
     <ng-template matTabContent>
-      <app-sensor-details></app-sensor-details>
+      <app-sensor-details [sensor]="sensor"></app-sensor-details>
     </ng-template>
   </mat-tab>
   <mat-tab label="Events">
     <ng-template matTabContent>
-      <app-sensor-events></app-sensor-events>
+      <app-sensor-events [sensor]="sensor"></app-sensor-events>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Charts" *ngIf="!isOnOffSensor">
+    <ng-template matTabContent>
+      <app-sensor-line-chart [sensor]="sensor"></app-sensor-line-chart>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

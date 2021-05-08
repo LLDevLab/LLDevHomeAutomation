@@ -1,7 +1,6 @@
 ﻿using DbCommunicationLib;
 using DbCommunicationLib.Model.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,11 +10,9 @@ namespace IoTCommunicationGui.Controllers
     [Route("[controller]")]
     public class SensorEventsController : ControllerBase
     {
-        readonly ILogger<SensorsOverviewController> _logger;
         readonly HomeAutomationContext _context;
-        public SensorEventsController(ILogger<SensorsOverviewController> logger, HomeAutomationContext context)
+        public SensorEventsController(HomeAutomationContext context)
         {
-            _logger = logger;
             _context = context;
         }
 
