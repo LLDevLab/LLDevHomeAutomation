@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forEachChild } from 'typescript/lib/tsserverlibrary';
 
 import { SensorType, UnitType } from '../../enums/enums';
 import { SensorDetails } from '../../interfaces/sensor-details';

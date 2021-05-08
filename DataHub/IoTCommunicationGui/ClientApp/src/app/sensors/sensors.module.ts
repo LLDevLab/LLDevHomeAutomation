@@ -9,19 +9,19 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { SensorEventsComponent } from './sensor-events/sensor-events.component';
 import { SensorDetailsComponent } from './sensor-details/sensor-details.component';
-
+import { SensorTabsComponent } from './sensor-tabs/sensor-tabs.component';
 
 @NgModule({
   declarations: [
     SensorEventsComponent,
-    SensorDetailsComponent
+    SensorDetailsComponent,
+    SensorTabsComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'fetch-sensordetails/:id', component: SensorDetailsComponent },
-      { path: 'fetch-sensorevents', component: SensorEventsComponent }
+      { path: 'fetch-sensordetails/:id', component: SensorTabsComponent },
     ]),
     MatTabsModule,
     MatTableModule,
