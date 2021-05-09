@@ -22,7 +22,7 @@ namespace IoTCommunicationGui.Controllers
         public IEnumerable<LineChartDto<double>> Get(int sensorId)
         {
 #if DEBUG
-            var dateFrom = DateTime.Now.AddDays(-365);
+            var dateFrom = new DateTime(2021, 04, 20);
 #else
             var dateFrom = DateTime.Now.AddDays(-2);
 #endif
@@ -30,22 +30,16 @@ namespace IoTCommunicationGui.Controllers
                           where sensors.Id == sensorId
                           select sensors).First();
 
-            // DOTO: make it work
-            //var eventsTmp = sensor.SensorEvents.Where(x => x.EventDateTime >= dateFrom);
-
-            var events = (from sensorEvents in _context.SensorEvents
-                          where sensorEvents.SensorId == sensor.Id &&
-                          sensorEvents.EventDateTime >= dateFrom
-                          select sensorEvents);
+            var sensorEvents = sensor.SensorEvents.Where(x => x.EventDateTime >= dateFrom);
 
             var result = new LineChartDto<double>
             {
                 Name = sensor.Name,
-                Series = events.Select(x => new LineChartPointDto<double>
+                Series = sensorEvents.Select(x => new LineChartPointDto<double>
                 {
                     Name = x.EventDateTime.ToString("dd/MM/yyyy HH:mm"),
                     Value = Math.Round(x.EventDoubleValue.Value, 2)
-                }) 
+                })
             };
 
             return new List<LineChartDto<double>> { result };

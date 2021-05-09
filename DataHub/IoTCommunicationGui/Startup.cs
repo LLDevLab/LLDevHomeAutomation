@@ -24,7 +24,13 @@ namespace IoTCommunicationGui
             var connectionString = Configuration.GetConnectionString("HomeAutomation");
             services.AddDbContext<HomeAutomationContext>(options => 
             {
+                options.UseLazyLoadingProxies();
                 options.UseNpgsql(connectionString);
+            });
+            
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
             services.AddControllersWithViews();
