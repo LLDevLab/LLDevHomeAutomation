@@ -22,25 +22,28 @@ namespace IoTCommunicationGui.Controllers
         public IEnumerable<LineChartDto<double>> Get(int sensorId)
         {
 #if DEBUG
-            var dateFrom = DateTime.Now.AddDays(-365);
+            var dateFrom = new DateTime(2021, 04, 20);
 #else
             var dateFrom = DateTime.Now.AddDays(-2);
 #endif
-            var sensor = (from sensors in _context.Sensors
+            var sensorName = (from sensors in _context.Sensors
                           where sensors.Id == sensorId
-                          select sensors).First();
+                          select sensors.Name).First();
 
-            // DOTO: make it work
-            //var eventsTmp = sensor.SensorEvents.Where(x => x.EventDateTime >= dateFrom);
-
-            var events = (from sensorEvents in _context.SensorEvents
-                          where sensorEvents.SensorId == sensor.Id &&
-                          sensorEvents.EventDateTime >= dateFrom
-                          select sensorEvents);
+            var events = from sensorEvents in _context.SensorEvents
+                            where sensorEvents.SensorId == sensorId &&
+                            sensorEvents.EventDateTime >= dateFrom
+                            // Ascending sort is needed because clustered index of a table is sorted in descendig order
+                            orderby sensorEvents.EventDateTime ascending
+                            select new 
+                            { 
+                                sensorEvents.EventDateTime, 
+                                sensorEvents.EventDoubleValue 
+                            };
 
             var result = new LineChartDto<double>
             {
-                Name = sensor.Name,
+                Name = sensorName,
                 Series = events.Select(x => new LineChartPointDto<double>
                 {
                     Name = x.EventDateTime.ToString("dd/MM/yyyy HH:mm"),

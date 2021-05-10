@@ -24,7 +24,10 @@ namespace IoTCommunicationGui
             var connectionString = Configuration.GetConnectionString("HomeAutomation");
             services.AddDbContext<HomeAutomationContext>(options => 
             {
-                options.UseNpgsql(connectionString);
+                var builder = options.UseNpgsql(connectionString);
+#if DEBUG
+                builder.EnableSensitiveDataLogging();
+#endif
             });
 
             services.AddControllersWithViews();
