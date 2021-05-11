@@ -1,7 +1,6 @@
 <p *ngIf="!sensorEvents"><em>Loading...</em></p>
 
-<p *ngIf="!eventsExists">No events found.</p>
-
+<p *ngIf="sensorEvents && !eventsExists">No events found.</p>
 
 <table mat-table [dataSource]="sensorEvents" class="mat-elevation-z8" *ngIf="sensorEvents && eventsExists">
   <tr>

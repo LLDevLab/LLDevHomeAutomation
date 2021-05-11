@@ -5,6 +5,6 @@
     <h2>Sensors</h2>
   </mat-list-item>
   <mat-list-option *ngFor="let sensor of sensors" [value]="sensor">
-    <a class="nav-link text-dark" routerLink="fetch-sensordetails/{{sensor.id}}">{{sensor.name}}</a>
+    <a class="nav-link text-dark" routerLink="fetch-sensor/{{sensor.id}}">{{sensor.name}}</a>
   </mat-list-option>
 </mat-selection-list>

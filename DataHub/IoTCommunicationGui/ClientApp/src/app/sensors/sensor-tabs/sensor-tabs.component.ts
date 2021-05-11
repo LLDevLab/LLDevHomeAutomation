@@ -24,7 +24,7 @@ export class SensorTabsComponent implements OnInit {
   }
 
   loadSensorDetail(sensorId: string) {
-    this.http.get<SensorDetails>(this.baseUrl + 'sensordetails/' + sensorId).subscribe(result => {
+    this.http.get<SensorDetails>(this.baseUrl + 'sensor/' + sensorId).subscribe(result => {
       this.sensor = result;
       this.isOnOffSensor = result.sensorType === SensorType.OnOffSensor;
     }, error => console.error(error));

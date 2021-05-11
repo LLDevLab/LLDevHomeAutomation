@@ -25,7 +25,7 @@ import { SensorLineChartComponent } from './sensor-line-chart/sensor-line-chart.
     CommonModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'fetch-sensordetails/:id', component: SensorTabsComponent },
+      { path: 'fetch-sensor/:id', component: SensorTabsComponent },
     ]),
     MatTabsModule,
     MatTableModule,

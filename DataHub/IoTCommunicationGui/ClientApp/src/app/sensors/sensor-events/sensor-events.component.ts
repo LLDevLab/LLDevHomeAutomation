@@ -54,10 +54,10 @@ export class SensorEventsComponent implements OnChanges {
   }
 
   private loadSensorEvents() {
-    this.http.get<number>(this.baseUrl + 'sensorevents/' + this.sensor.id).subscribe(result => {
+    this.http.get<number>(this.baseUrl + 'sensor/' + this.sensor.id + '/events').subscribe(result => {
       this.eventsCount = result;
 
-      this.http.get<SensorEvents[]>(this.baseUrl + 'sensorevents/' + this.sensor.id + '&' + this.pageSize + '&' + this.pageIndex).subscribe(result => {
+      this.http.get<SensorEvents[]>(this.baseUrl + 'sensor/' + this.sensor.id + '/events/' + this.pageSize + '&' + this.pageIndex).subscribe(result => {
         this.sensorEvents = result;
         this.eventsExists = this.sensorEvents.length > 0;
       }, error => console.error(error));

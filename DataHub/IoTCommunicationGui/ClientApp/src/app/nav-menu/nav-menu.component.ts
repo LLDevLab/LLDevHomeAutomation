@@ -12,7 +12,7 @@ export class NavMenuComponent {
   public sensors: SensorDetails[];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<SensorDetails[]>(baseUrl + 'sensorsoverview').subscribe(result => {
+    http.get<SensorDetails[]>(baseUrl + 'sensor').subscribe(result => {
       this.sensors = result;
     }, error => console.error(error));
   }
