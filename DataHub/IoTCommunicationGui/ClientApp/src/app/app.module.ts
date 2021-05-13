@@ -6,7 +6,10 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -25,7 +28,10 @@ import { SensorsModule } from './sensors/sensors.module'
     HttpClientModule,
     FormsModule,
     MatSidenavModule,
-    MatListModule,
+    MatTreeModule,
+    MatIconModule,
+    MatButtonModule,
+    MatRippleModule,
     SensorsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([

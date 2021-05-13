@@ -1,10 +1,24 @@
 <p *ngIf="!sensors"><em>Loading...</em></p>
 
-<mat-selection-list *ngIf="sensors" [multiple]="false">
-  <mat-list-item>
-    <h2>Sensors</h2>
-  </mat-list-item>
-  <mat-list-option *ngFor="let sensor of sensors" [value]="sensor">
-    <a class="nav-link text-dark" routerLink="fetch-sensor/{{sensor.id}}">{{sensor.name}}</a>
-  </mat-list-option>
-</mat-selection-list>
+<mat-tree *ngIf="sensors" [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [matTreeNodePaddingIndent]="0">
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button mat-icon-button disabled></button>
+    <a class="nav-link text-dark link" routerLink="fetch-sensor/{{node.id}}"
+       matRipple
+       [matRippleCentered]="true"
+       [matRippleDisabled]="false"
+       [matRippleUnbounded]="false">{{node.name}}</a>
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding [matTreeNodePaddingIndent]="20">
+    <button mat-icon-button matTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.name">
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+    {{node.name}}
+  </mat-tree-node>
+</mat-tree>
