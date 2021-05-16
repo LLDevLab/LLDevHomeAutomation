@@ -5,7 +5,7 @@
 -- Dumped from database version 10.16 (Ubuntu 10.16-0ubuntu0.18.04.1)
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-05-16 18:01:14
+-- Started on 2021-05-16 18:13:33
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -27,7 +27,7 @@ SET default_tablespace = '';
 
 CREATE TABLE public."ChartSensorMap" (
     "ChartId" smallint NOT NULL,
-    "SensorId" smallint NOT NULL
+    "SensorId" integer NOT NULL
 );
 
 
@@ -205,7 +205,7 @@ ALTER TABLE ONLY public."Sensors" ALTER COLUMN "Id" SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 2802 (class 2606 OID 16771)
+-- TOC entry 2802 (class 2606 OID 16800)
 -- Name: ChartSensorMap ChartSensorMap_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -337,7 +337,7 @@ CREATE INDEX "fki_fki_ChartSensorMap_Charts_fk" ON public."ChartSensorMap" USING
 
 
 --
--- TOC entry 2804 (class 1259 OID 16798)
+-- TOC entry 2804 (class 1259 OID 16801)
 -- Name: fki_fki_ChartSensorMap_Sensors_fk; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -381,7 +381,7 @@ ALTER TABLE ONLY public."ChartSensorMap"
 
 
 --
--- TOC entry 2809 (class 2606 OID 16793)
+-- TOC entry 2809 (class 2606 OID 16802)
 -- Name: ChartSensorMap fki_ChartSensorMap_Sensors_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -389,7 +389,7 @@ ALTER TABLE ONLY public."ChartSensorMap"
     ADD CONSTRAINT "fki_ChartSensorMap_Sensors_fk" FOREIGN KEY ("SensorId") REFERENCES public."Sensors"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
--- Completed on 2021-05-16 18:01:15
+-- Completed on 2021-05-16 18:13:34
 
 --
 -- PostgreSQL database dump complete

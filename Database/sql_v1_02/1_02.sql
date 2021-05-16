@@ -27,7 +27,7 @@ ALTER TABLE public."Charts"
 CREATE TABLE public."ChartSensorMap"
 (
     "ChartId" smallint NOT NULL,
-    "SensorId" smallint NOT NULL,
+    "SensorId" integer NOT NULL,
     CONSTRAINT "ChartSensorMap_pkey" PRIMARY KEY ("ChartId", "SensorId"),
     CONSTRAINT "fki_ChartSensorMap_Charts_fk" FOREIGN KEY ("ChartId")
         REFERENCES public."Charts" ("Id") MATCH SIMPLE
