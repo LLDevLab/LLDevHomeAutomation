@@ -6,6 +6,8 @@ namespace DbCommunicationLib
 {
     public partial class HomeAutomationContext : DbContext
     {
+        public virtual DbSet<Chart> Charts { get; set; }
+        public virtual DbSet<ChartSensorMap> ChartSensorMaps { get; set; }
         public virtual DbSet<MeasurementUnit> MeasurementUnits { get; set; }
         public virtual DbSet<Sensor> Sensors { get; set; }
         public virtual DbSet<SensorEvent> SensorEvents { get; set; }
@@ -23,6 +25,40 @@ namespace DbCommunicationLib
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "en_US.UTF-8");
+
+            modelBuilder.Entity<Chart>(entity =>
+            {
+                entity.HasIndex(e => e.Name, "Charts_Name_constraint")
+                    .IsUnique();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<ChartSensorMap>(entity =>
+            {
+                entity.HasKey(e => new { e.ChartId, e.SensorId })
+                    .HasName("ChartSensorMap_pkey");
+
+                entity.ToTable("ChartSensorMap");
+
+                entity.HasIndex(e => e.ChartId, "fki_fki_ChartSensorMap_Charts_fk");
+
+                entity.HasIndex(e => e.SensorId, "fki_fki_ChartSensorMap_Sensors_fk");
+
+                entity.HasOne(d => d.Chart)
+                    .WithMany(p => p.ChartSensorMaps)
+                    .HasForeignKey(d => d.ChartId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fki_ChartSensorMap_Charts_fk");
+
+                entity.HasOne(d => d.Sensor)
+                    .WithMany(p => p.ChartSensorMaps)
+                    .HasForeignKey(d => d.SensorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fki_ChartSensorMap_Sensors_fk");
+            });
 
             modelBuilder.Entity<MeasurementUnit>(entity =>
             {
