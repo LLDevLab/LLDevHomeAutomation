@@ -1,16 +1,6 @@
-CREATE SEQUENCE public."Charts_Id_seq"
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 32767
-    CACHE 1;
-
-ALTER SEQUENCE public."Charts_Id_seq"
-    OWNER TO postgres;
-
 CREATE TABLE public."Charts"
 (
-    "Id" smallint NOT NULL DEFAULT nextval('"Charts_Id_seq"'::regclass),
+    "Id" smallint NOT NULL,
     "Name" character varying(30) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "Charts_pkey" PRIMARY KEY ("Id"),
     CONSTRAINT "Charts_Name_constraint" UNIQUE ("Name")
@@ -21,8 +11,7 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE public."Charts"
-    OWNER to postgres;
-	
+    OWNER to postgres;	
 	
 CREATE TABLE public."ChartSensorMap"
 (
