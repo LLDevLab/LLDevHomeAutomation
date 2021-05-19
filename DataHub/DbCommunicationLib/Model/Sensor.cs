@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
@@ -15,7 +14,7 @@ namespace DbCommunicationLib.Model
 
         public int Id { get; set; }
         public string Description { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public string Name { get; set; }
         public bool? InverseLogic { get; set; }
         public short SensorType { get; set; }

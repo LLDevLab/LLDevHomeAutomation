@@ -31,6 +31,8 @@ namespace DbCommunicationLib
                 entity.HasIndex(e => e.Name, "Charts_Name_constraint")
                     .IsUnique();
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(30);
@@ -82,10 +84,6 @@ namespace DbCommunicationLib
                 entity.HasIndex(e => e.SensorType, "fki_Sensors_SensorTypes_fk");
 
                 entity.Property(e => e.Description).IsRequired();
-
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("true");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

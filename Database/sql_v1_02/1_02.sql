@@ -17,6 +17,7 @@ CREATE TABLE public."ChartSensorMap"
 (
     "ChartId" smallint NOT NULL,
     "SensorId" integer NOT NULL,
+    "SelectedByDefault" boolean NOT NULL,
     CONSTRAINT "ChartSensorMap_pkey" PRIMARY KEY ("ChartId", "SensorId"),
     CONSTRAINT "fki_ChartSensorMap_Charts_fk" FOREIGN KEY ("ChartId")
         REFERENCES public."Charts" ("Id") MATCH SIMPLE
@@ -50,3 +51,7 @@ CREATE INDEX "fki_fki_ChartSensorMap_Sensors_fk"
     ON public."ChartSensorMap" USING btree
     ("SensorId" ASC NULLS LAST)
     TABLESPACE pg_default;
+	
+
+ALTER TABLE public."Sensors"
+    ALTER COLUMN "IsActive" boolean NOT NULL;

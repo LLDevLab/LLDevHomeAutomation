@@ -6,6 +6,7 @@ namespace DbCommunicationLib.Model
     {
         public short ChartId { get; set; }
         public int SensorId { get; set; }
+        public bool SelectedByDefault { get; set; }
 
         public virtual Chart Chart { get; set; }
         public virtual Sensor Sensor { get; set; }
