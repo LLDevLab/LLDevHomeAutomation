@@ -2,20 +2,23 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Inject } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { HttpClient } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 
-import { SensorDetails } from '../interfaces';
+import { ISensorDetails, IChartDetails, INamedTable } from '../interfaces';
 
-interface SensorsNode {
+interface IMenuItem {
   id?: number;
   name: string;
-  children?: SensorsNode[];
+  fetchUrl: string,
+  children?: IMenuItem[];
 }
 
-interface FlatNode {
+interface IFlatNode {
   expandable: boolean;
   id?: number;
   name: string;
   level: number;
+  fetchUrl: string;
 }
 
 @Component({
@@ -24,18 +27,20 @@ interface FlatNode {
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  private _transformer = (node: SensorsNode, level: number) => {
+  private _transformer = (node: IMenuItem, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       id: node.id,
       name: node.name,
       level: level,
+      fetchUrl: node.fetchUrl
     };
   }
 
-  sensors: SensorDetails[];
+  sensors: ISensorDetails[];
+  charts: IChartDetails[];
 
-  treeControl = new FlatTreeControl<FlatNode>(
+  treeControl = new FlatTreeControl<IFlatNode>(
     node => node.level, node => node.expandable);
 
   treeFlattener = new MatTreeFlattener(
@@ -43,23 +48,40 @@ export class NavMenuComponent {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  hasChild = (_: number, node: FlatNode) => node.expandable;
+  hasChild = (_: number, node: IFlatNode) => node.expandable;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<SensorDetails[]>(baseUrl + 'sensor').subscribe(result => {
-      this.sensors = result;
-      let rootNode: SensorsNode = {
-        name: 'Sensors',
-        children: []
+    forkJoin([http.get<ISensorDetails[]>(baseUrl + 'sensor'), http.get<IChartDetails[]>(baseUrl + 'chart')])
+      .subscribe(([sensorsData, chartsData]) => {
+        this.sensors = sensorsData;
+        this.charts = chartsData;
+        this.initMenuItems();
+      }, error => console.error(error));
+  }
+
+  private initMenuItems() {
+    const sensorsMenuItems = this.getMenuItem(this.sensors, 'Sensors', 'fetch-sensor');
+    const chartsMenuItems = this.getMenuItem(this.charts, 'Charts', 'fetch-chart');
+
+    this.dataSource.data = [sensorsMenuItems, chartsMenuItems];
+  }
+
+  private getMenuItem(values: INamedTable[], rootNodeName: string, fetchUrl: string): IMenuItem {
+    const menuItems: IMenuItem = {
+      name: rootNodeName,
+      fetchUrl: fetchUrl,
+      children: []
+    };
+
+    values.forEach(function (value) {
+      const data: IMenuItem = {
+        id: value.id,
+        fetchUrl: fetchUrl,
+        name: value.name
       };
-      this.sensors.forEach(function (value) {
-        const data: SensorsNode = {
-          id: value.id,
-          name: value.name
-        };
-        rootNode.children.push(data);
-      });
-      this.dataSource.data = [rootNode];
-    }, error => console.error(error));
+      menuItems.children.push(data);
+    });
+
+    return menuItems;
   }
 }

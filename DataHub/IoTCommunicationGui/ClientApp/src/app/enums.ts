@@ -9,3 +9,8 @@ export enum UnitType {
   DegreeCelsius = 1,
   Pascals = 2
 }
+
+export enum ChartType {
+  Undefined = 0,
+  LineChart = 1
+}

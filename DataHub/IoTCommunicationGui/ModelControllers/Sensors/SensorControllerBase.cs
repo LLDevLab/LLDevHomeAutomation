@@ -12,14 +12,14 @@ namespace DbCommunicationLib.Controller.Sensors
         public int Id => SensorModel.Id;
         public string Name => SensorModel.Name;
         public string Description => SensorModel.Description;
-        public bool? IsActive => SensorModel.IsActive;
+        public bool IsActive => SensorModel.IsActive;
         public SensorTypeEnum SensorType => (SensorTypeEnum)SensorModel.SensorType;
         #endregion Public properties
 
         #region ISensor
         int ISensor.Id => SensorModel.Id;
         string ISensor.Description => SensorModel.Description;
-        bool? ISensor.IsActive => SensorModel.IsActive;
+        bool ISensor.IsActive => SensorModel.IsActive;
         string ISensor.Name => SensorModel.Name;
         bool? ISensor.InverseLogic => SensorModel.InverseLogic;
         short ISensor.SensorType => SensorModel.SensorType;

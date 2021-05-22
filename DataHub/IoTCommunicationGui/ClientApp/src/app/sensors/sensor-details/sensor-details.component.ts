@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { SensorType, UnitType } from '../../enums';
-import { SensorDetails } from '../../interfaces';
+import { ISensorDetails } from '../../interfaces';
 
 export interface SensorFields {
   label: string;
@@ -15,7 +15,7 @@ export interface SensorFields {
 })
 export class SensorDetailsComponent implements OnChanges {
 
-  @Input() sensor: SensorDetails;
+  @Input() sensor: ISensorDetails;
 
   public sensorType: string;
   public unitType: string;

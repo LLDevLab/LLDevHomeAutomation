@@ -27,16 +27,16 @@ namespace IoTCommunicationGui.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetDetail(int id)
+        public ISensor GetDetail(int id)
         {
             var result = (from sensor in _context.Sensors
                          where sensor.Id == id
                          select sensor).FirstOrDefault();
 
-            return result != null ? Ok(result as ISensor) : NotFound();
+            return result;
         }
 
-        [HttpGet("{sensorId:int}/Events/{pageSize:int}&{pageIndex:int}")]
+        [HttpGet("{sensorId:int}/events/{pageSize:int}&{pageIndex:int}")]
         public IEnumerable<ISensorEvent> GetEvents(int sensorId, int pageSize, int pageIndex)
         {
             var recToSkip = pageIndex * pageSize;
@@ -48,7 +48,7 @@ namespace IoTCommunicationGui.Controllers
             return list;
         }
 
-        [HttpGet("{sensorId:int}/Events")]
+        [HttpGet("{sensorId:int}/events")]
         public int GetEvents(int sensorId)
         {
             var cnt = (from sensorEvent in _context.SensorEvents
@@ -56,6 +56,16 @@ namespace IoTCommunicationGui.Controllers
                        select sensorEvent).Count();
 
             return cnt;
+        }
+
+        [HttpGet("unitsensors/{unitId:int}")]
+        public IEnumerable<ISensor> GetUnitSensors(int unitId)
+        {
+            var result = from sensors in _context.Sensors
+                       where sensors.UnitId == unitId
+                       select sensors;
+
+            return result;
         }
     }
 }

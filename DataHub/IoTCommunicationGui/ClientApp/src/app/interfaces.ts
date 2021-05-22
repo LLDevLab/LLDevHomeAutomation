@@ -1,8 +1,12 @@
+import { Timestamp } from "rxjs";
 import { SensorType, UnitType } from "./enums";
 
-export interface SensorDetails {
+export interface INamedTable {
   id: number;
   name: string;
+}
+
+export interface ISensorDetails extends INamedTable {
   description: string;
   isActive: boolean;
   inverseLogic: boolean;
@@ -10,7 +14,10 @@ export interface SensorDetails {
   unitId: UnitType;
 }
 
-export interface SensorEvents {
+export interface IChartDetails extends INamedTable {
+}
+
+export interface ISensorEvents {
   id: number;
   sensorId: number;
   eventDateTime: Date;
@@ -18,12 +25,17 @@ export interface SensorEvents {
   eventBooleanValue: boolean;
 }
 
-export interface SensorLineChartData<T> {
+export interface ISensorLineChartData<T> {
   name: string;
-  series: SensorLineChartPointData<T>[];
+  series: ISensorLineChartPointData<T>[];
 }
 
-export interface SensorLineChartPointData<T> {
-  name: string;
+export interface ISensorLineChartPointData<T> {
+  name: Date;
   value: T;
+}
+
+export interface IChartUnitMapping {
+  unitId: number;
+  unitName: string;
 }

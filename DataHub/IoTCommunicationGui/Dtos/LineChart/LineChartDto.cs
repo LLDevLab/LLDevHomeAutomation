@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IoTCommunicationGui.Dtos
+namespace IoTCommunicationGui.Dtos.LineChart
 {
     public class LineChartDto<T>
     {

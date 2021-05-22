@@ -1,4 +1,4 @@
-﻿namespace IoTCommunicationGui.Dtos
+﻿namespace IoTCommunicationGui.Dtos.LineChart
 {
     public class LineChartPointDto<T>
     {

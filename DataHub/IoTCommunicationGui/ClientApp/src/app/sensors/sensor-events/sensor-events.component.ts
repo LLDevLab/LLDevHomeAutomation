@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { PageEvent } from '@angular/material/paginator';
 
-import { SensorEvents, SensorDetails } from '../../interfaces';
+import { ISensorEvents, ISensorDetails } from '../../interfaces';
 
 @Component({
   selector: 'app-sensor-events',
@@ -12,9 +12,9 @@ import { SensorEvents, SensorDetails } from '../../interfaces';
 })
 export class SensorEventsComponent implements OnChanges {
 
-  @Input() sensor: SensorDetails;
+  @Input() sensor: ISensorDetails;
 
-  public sensorEvents: SensorEvents[];
+  public sensorEvents: ISensorEvents[];
   public eventsExists: boolean;
   public eventValue: string;
   public displayedColumns: string[] = ['id', 'value', 'datetime'];
@@ -37,7 +37,7 @@ export class SensorEventsComponent implements OnChanges {
     this.loadSensorEvents();
   }
 
-  getEventValue(event: SensorEvents): string {
+  getEventValue(event: ISensorEvents): string {
     let result = 'Undefined';
     if (event.eventBooleanValue !== null)
       result = event.eventBooleanValue ? 'On' : 'Off';
@@ -57,7 +57,7 @@ export class SensorEventsComponent implements OnChanges {
     this.http.get<number>(this.baseUrl + 'sensor/' + this.sensor.id + '/events').subscribe(result => {
       this.eventsCount = result;
 
-      this.http.get<SensorEvents[]>(this.baseUrl + 'sensor/' + this.sensor.id + '/events/' + this.pageSize + '&' + this.pageIndex).subscribe(result => {
+      this.http.get<ISensorEvents[]>(this.baseUrl + 'sensor/' + this.sensor.id + '/events/' + this.pageSize + '&' + this.pageIndex).subscribe(result => {
         this.sensorEvents = result;
         this.eventsExists = this.sensorEvents.length > 0;
       }, error => console.error(error));

@@ -16,6 +16,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SensorsModule } from './sensors/sensors.module'
 
+import { ChartsModule } from './charts/charts.module'
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { SensorsModule } from './sensors/sensors.module'
     MatButtonModule,
     MatRippleModule,
     SensorsModule,
+    ChartsModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

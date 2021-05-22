@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { SensorType } from '../../enums';
-import { SensorDetails } from '../../interfaces';
+import { ISensorDetails } from '../../interfaces';
 
 @Component({
   selector: 'app-sensor-tabs',
@@ -12,7 +12,7 @@ import { SensorDetails } from '../../interfaces';
 })
 export class SensorTabsComponent implements OnInit {
 
-  public sensor: SensorDetails;
+  public sensor: ISensorDetails;
   public isOnOffSensor: boolean;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private activatedroute: ActivatedRoute) { }
@@ -24,7 +24,7 @@ export class SensorTabsComponent implements OnInit {
   }
 
   loadSensorDetail(sensorId: string) {
-    this.http.get<SensorDetails>(this.baseUrl + 'sensor/' + sensorId).subscribe(result => {
+    this.http.get<ISensorDetails>(this.baseUrl + 'sensor/' + sensorId).subscribe(result => {
       this.sensor = result;
       this.isOnOffSensor = result.sensorType === SensorType.OnOffSensor;
     }, error => console.error(error));

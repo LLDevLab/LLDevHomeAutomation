@@ -1,17 +1,18 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ISensorDetails, ISensorLineChartData } from '../../interfaces';
+import { ISensorLineChartData, IChartUnitMapping, IChartDetails } from '../../interfaces';
 import { UnitType } from '../../enums';
 
 @Component({
-  selector: 'app-sensor-line-chart',
-  templateUrl: './sensor-line-chart.component.html',
-  styleUrls: ['./sensor-line-chart.component.css']
+  selector: 'app-line-chart',
+  templateUrl: './line-chart.component.html',
+  styleUrls: ['./line-chart.component.css']
 })
-export class SensorLineChartComponent implements OnChanges {
+export class LineChartComponent implements OnChanges {
 
-  @Input() sensor: ISensorDetails;
+  @Input() chart: IChartDetails;
+  @Input() unitId: number;
 
   chartData: ISensorLineChartData<number>[];
   dataExists: boolean;
@@ -35,18 +36,23 @@ export class SensorLineChartComponent implements OnChanges {
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.dataExists = false;
+    this.chartData = [];
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (typeof changes.sensor.currentValue === "undefined")
+  ngOnChanges() {
+    if (this.unitId === 0)
       return;
 
-    this.loadChartData();
+    this.chartData = [];
+    this.http.get<ISensorLineChartData<number>[]>(this.baseUrl + 'chart/' + this.chart.id + '/unit/' + this.unitId).subscribe(chartDataResult => {
+      this.chartData = this.chartData.concat(chartDataResult);
+      this.dataExists = this.dataExists || this.chartData.every(element => element.series.length > 0);
+    });
   }
 
   getYAxisLabel(): string {
     let label = "Value ";
-    switch (this.sensor.unitId) {
+    switch (this.unitId) {
       case UnitType.DegreeCelsius:
         label += "(\u00B0C)";
         break;
@@ -71,12 +77,5 @@ export class SensorLineChartComponent implements OnChanges {
 
   onDeactivate(data): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-
-  private loadChartData() {
-    this.http.get<ISensorLineChartData<number>[]>(this.baseUrl + 'chart/sensor/' + this.sensor.id).subscribe(result => {
-      this.chartData = result;
-      this.dataExists = this.chartData.every(element => element.series.length > 0);
-    }, error => console.error(error));
   }
 }
