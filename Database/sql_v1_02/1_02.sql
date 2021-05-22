@@ -13,18 +13,17 @@ TABLESPACE pg_default;
 ALTER TABLE public."Charts"
     OWNER to postgres;	
 	
-CREATE TABLE public."ChartSensorMap"
+CREATE TABLE public."ChartUnitMapping"
 (
     "ChartId" smallint NOT NULL,
-    "SensorId" integer NOT NULL,
-    "SelectedByDefault" boolean NOT NULL,
-    CONSTRAINT "ChartSensorMap_pkey" PRIMARY KEY ("ChartId", "SensorId"),
-    CONSTRAINT "fki_ChartSensorMap_Charts_fk" FOREIGN KEY ("ChartId")
+    "UnitId" smallint NOT NULL,
+    CONSTRAINT "ChartUnitMapping_pkey" PRIMARY KEY ("ChartId", "UnitId"),
+    CONSTRAINT "fki_ChartUnitMapping_Charts_fk" FOREIGN KEY ("ChartId")
         REFERENCES public."Charts" ("Id") MATCH SIMPLE
         ON UPDATE RESTRICT
         ON DELETE RESTRICT,
-    CONSTRAINT "fki_ChartSensorMap_Sensors_fk" FOREIGN KEY ("SensorId")
-        REFERENCES public."Sensors" ("Id") MATCH SIMPLE
+    CONSTRAINT "fki_ChartUnitMapping_MeasurementUnits_fk" FOREIGN KEY ("UnitId")
+        REFERENCES public."MeasurementUnits" ("Id") MATCH SIMPLE
         ON UPDATE RESTRICT
         ON DELETE RESTRICT
 )
@@ -33,25 +32,24 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."ChartSensorMap"
+ALTER TABLE public."ChartUnitMapping"
     OWNER to postgres;
--- Index: fki_fki_ChartSensorMap_Charts_fk
+-- Index: fki_fki_ChartUnitMapping_Charts_fk
 
--- DROP INDEX public."fki_fki_ChartSensorMap_Charts_fk";
+-- DROP INDEX public."fki_fki_ChartUnitMapping_Charts_fk";
 
-CREATE INDEX "fki_fki_ChartSensorMap_Charts_fk"
-    ON public."ChartSensorMap" USING btree
+CREATE INDEX "fki_fki_ChartUnitMapping_Charts_fk"
+    ON public."ChartUnitMapping" USING btree
     ("ChartId" ASC NULLS LAST)
     TABLESPACE pg_default;
--- Index: fki_fki_ChartSensorMap_Sensors_fk
+-- Index: fki_fki_ChartUnitMapping_MeasurementUnits_fk
 
--- DROP INDEX public."fki_fki_ChartSensorMap_Sensors_fk";
+-- DROP INDEX public."fki_fki_ChartUnitMapping_MeasurementUnits_fk";
 
-CREATE INDEX "fki_fki_ChartSensorMap_Sensors_fk"
-    ON public."ChartSensorMap" USING btree
-    ("SensorId" ASC NULLS LAST)
-    TABLESPACE pg_default;
-	
+CREATE INDEX "fki_fki_ChartUnitMapping_MeasurementUnits_fk"
+    ON public."ChartUnitMapping" USING btree
+    ("UnitId" ASC NULLS LAST)
+    TABLESPACE pg_default;	
 
 ALTER TABLE public."Sensors"
     ALTER COLUMN "IsActive" boolean NOT NULL;

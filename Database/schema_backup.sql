@@ -5,7 +5,7 @@
 -- Dumped from database version 10.16 (Ubuntu 10.16-0ubuntu0.18.04.1)
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-05-19 19:40:59
+-- Started on 2021-05-22 09:52:37
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -21,18 +21,17 @@ SET row_security = off;
 SET default_tablespace = '';
 
 --
--- TOC entry 203 (class 1259 OID 16767)
--- Name: ChartSensorMap; Type: TABLE; Schema: public; Owner: postgres
+-- TOC entry 203 (class 1259 OID 16832)
+-- Name: ChartUnitMapping; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."ChartSensorMap" (
+CREATE TABLE public."ChartUnitMapping" (
     "ChartId" smallint NOT NULL,
-    "SensorId" integer NOT NULL,
-    "SelectedByDefault" boolean NOT NULL
+    "UnitId" smallint NOT NULL
 );
 
 
-ALTER TABLE public."ChartSensorMap" OWNER TO postgres;
+ALTER TABLE public."ChartUnitMapping" OWNER TO postgres;
 
 --
 -- TOC entry 202 (class 1259 OID 16759)
@@ -173,12 +172,12 @@ ALTER TABLE ONLY public."Sensors" ALTER COLUMN "Id" SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 2798 (class 2606 OID 16800)
--- Name: ChartSensorMap ChartSensorMap_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2798 (class 2606 OID 16836)
+-- Name: ChartUnitMapping ChartUnitMapping_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."ChartSensorMap"
-    ADD CONSTRAINT "ChartSensorMap_pkey" PRIMARY KEY ("ChartId", "SensorId");
+ALTER TABLE ONLY public."ChartUnitMapping"
+    ADD CONSTRAINT "ChartUnitMapping_pkey" PRIMARY KEY ("ChartId", "UnitId");
 
 
 --
@@ -297,19 +296,19 @@ CREATE INDEX "fki_Sensors_SensorTypes_fk" ON public."Sensors" USING btree ("Sens
 
 
 --
--- TOC entry 2799 (class 1259 OID 16787)
--- Name: fki_fki_ChartSensorMap_Charts_fk; Type: INDEX; Schema: public; Owner: postgres
+-- TOC entry 2799 (class 1259 OID 16842)
+-- Name: fki_fki_ChartUnitMapping_Charts_fk; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX "fki_fki_ChartSensorMap_Charts_fk" ON public."ChartSensorMap" USING btree ("ChartId");
+CREATE INDEX "fki_fki_ChartUnitMapping_Charts_fk" ON public."ChartUnitMapping" USING btree ("ChartId");
 
 
 --
--- TOC entry 2800 (class 1259 OID 16801)
--- Name: fki_fki_ChartSensorMap_Sensors_fk; Type: INDEX; Schema: public; Owner: postgres
+-- TOC entry 2800 (class 1259 OID 16848)
+-- Name: fki_fki_ChartUnitMapping_MeasurementUnits_fk; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX "fki_fki_ChartSensorMap_Sensors_fk" ON public."ChartSensorMap" USING btree ("SensorId");
+CREATE INDEX "fki_fki_ChartUnitMapping_MeasurementUnits_fk" ON public."ChartUnitMapping" USING btree ("UnitId");
 
 
 --
@@ -340,24 +339,24 @@ ALTER TABLE ONLY public."Sensors"
 
 
 --
--- TOC entry 2804 (class 2606 OID 16788)
--- Name: ChartSensorMap fki_ChartSensorMap_Charts_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2805 (class 2606 OID 16837)
+-- Name: ChartUnitMapping fki_ChartUnitMapping_Charts_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."ChartSensorMap"
-    ADD CONSTRAINT "fki_ChartSensorMap_Charts_fk" FOREIGN KEY ("ChartId") REFERENCES public."Charts"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public."ChartUnitMapping"
+    ADD CONSTRAINT "fki_ChartUnitMapping_Charts_fk" FOREIGN KEY ("ChartId") REFERENCES public."Charts"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- TOC entry 2805 (class 2606 OID 16802)
--- Name: ChartSensorMap fki_ChartSensorMap_Sensors_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2804 (class 2606 OID 16843)
+-- Name: ChartUnitMapping fki_ChartUnitMapping_MeasurementUnits_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."ChartSensorMap"
-    ADD CONSTRAINT "fki_ChartSensorMap_Sensors_fk" FOREIGN KEY ("SensorId") REFERENCES public."Sensors"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public."ChartUnitMapping"
+    ADD CONSTRAINT "fki_ChartUnitMapping_MeasurementUnits_fk" FOREIGN KEY ("UnitId") REFERENCES public."MeasurementUnits"("Id") ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
--- Completed on 2021-05-19 19:41:00
+-- Completed on 2021-05-22 09:52:38
 
 --
 -- PostgreSQL database dump complete
