@@ -52,4 +52,4 @@ CREATE INDEX "fki_fki_ChartUnitMapping_MeasurementUnits_fk"
     TABLESPACE pg_default;	
 
 ALTER TABLE public."Sensors"
-    ALTER COLUMN "IsActive" boolean NOT NULL;
+    ALTER COLUMN "IsActive" DROP DEFAULT;
