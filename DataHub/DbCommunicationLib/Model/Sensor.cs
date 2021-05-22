@@ -8,7 +8,6 @@ namespace DbCommunicationLib.Model
     {
         public Sensor()
         {
-            ChartSensorMaps = new HashSet<ChartSensorMap>();
             SensorEvents = new HashSet<SensorEvent>();
         }
 
@@ -22,7 +21,6 @@ namespace DbCommunicationLib.Model
 
         public virtual SensorType SensorTypeNavigation { get; set; }
         public virtual MeasurementUnit Unit { get; set; }
-        public virtual ICollection<ChartSensorMap> ChartSensorMaps { get; set; }
         public virtual ICollection<SensorEvent> SensorEvents { get; set; }
     }
 }

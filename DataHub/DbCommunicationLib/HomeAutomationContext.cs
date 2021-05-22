@@ -7,7 +7,7 @@ namespace DbCommunicationLib
     public partial class HomeAutomationContext : DbContext
     {
         public virtual DbSet<Chart> Charts { get; set; }
-        public virtual DbSet<ChartSensorMap> ChartSensorMaps { get; set; }
+        public virtual DbSet<ChartUnitMapping> ChartUnitMappings { get; set; }
         public virtual DbSet<MeasurementUnit> MeasurementUnits { get; set; }
         public virtual DbSet<Sensor> Sensors { get; set; }
         public virtual DbSet<SensorEvent> SensorEvents { get; set; }
@@ -38,28 +38,28 @@ namespace DbCommunicationLib
                     .HasMaxLength(30);
             });
 
-            modelBuilder.Entity<ChartSensorMap>(entity =>
+            modelBuilder.Entity<ChartUnitMapping>(entity =>
             {
-                entity.HasKey(e => new { e.ChartId, e.SensorId })
-                    .HasName("ChartSensorMap_pkey");
+                entity.HasKey(e => new { e.ChartId, e.UnitId })
+                    .HasName("ChartUnitMapping_pkey");
 
-                entity.ToTable("ChartSensorMap");
+                entity.ToTable("ChartUnitMapping");
 
-                entity.HasIndex(e => e.ChartId, "fki_fki_ChartSensorMap_Charts_fk");
+                entity.HasIndex(e => e.ChartId, "fki_fki_ChartUnitMapping_Charts_fk");
 
-                entity.HasIndex(e => e.SensorId, "fki_fki_ChartSensorMap_Sensors_fk");
+                entity.HasIndex(e => e.UnitId, "fki_fki_ChartUnitMapping_MeasurementUnits_fk");
 
                 entity.HasOne(d => d.Chart)
-                    .WithMany(p => p.ChartSensorMaps)
+                    .WithMany(p => p.ChartUnitMappings)
                     .HasForeignKey(d => d.ChartId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fki_ChartSensorMap_Charts_fk");
+                    .HasConstraintName("fki_ChartUnitMapping_Charts_fk");
 
-                entity.HasOne(d => d.Sensor)
-                    .WithMany(p => p.ChartSensorMaps)
-                    .HasForeignKey(d => d.SensorId)
+                entity.HasOne(d => d.Unit)
+                    .WithMany(p => p.ChartUnitMappings)
+                    .HasForeignKey(d => d.UnitId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fki_ChartSensorMap_Sensors_fk");
+                    .HasConstraintName("fki_ChartUnitMapping_MeasurementUnits_fk");
             });
 
             modelBuilder.Entity<MeasurementUnit>(entity =>
