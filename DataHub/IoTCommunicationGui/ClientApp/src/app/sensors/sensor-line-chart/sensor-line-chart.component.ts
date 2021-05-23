@@ -1,82 +1,36 @@
-import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ISensorDetails, ISensorLineChartData } from '../../interfaces';
-import { UnitType } from '../../enums';
+import { LineChartBase } from '../../classes/charts/line-chart-base';
 
 @Component({
   selector: 'app-sensor-line-chart',
-  templateUrl: './sensor-line-chart.component.html',
-  styleUrls: ['./sensor-line-chart.component.css']
+  templateUrl: '../../classes/charts/line-chart.component.html',
+  styleUrls: ['../../classes/charts/line-chart.component.css']
 })
-export class SensorLineChartComponent implements OnChanges {
-
+export class SensorLineChartComponent extends LineChartBase {
   @Input() sensor: ISensorDetails;
 
-  chartData: ISensorLineChartData<number>[];
-  dataExists: boolean;
-
-  view: any[] = [1000, 500];
-
-  // options
-  legend: boolean = true;
-  showLabels: boolean = true;
-  animations: boolean = true;
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Date/Time';
-  timeline: boolean = true;
-
-  colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-  };
-
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    this.dataExists = false;
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    super(http, baseUrl)
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (typeof changes.sensor.currentValue === "undefined")
       return;
 
-    this.loadChartData();
+    super.ngOnChanges(changes);
   }
 
-  getYAxisLabel(): string {
-    let label = "Value ";
-    switch (this.sensor.unitId) {
-      case UnitType.DegreeCelsius:
-        label += "(\u00B0C)";
-        break;
-      case UnitType.Pascals:
-        label += "(Pa)";
-        break;
-      default:
-        label += "(undefined)";
-        break;
-    }
-
-    return label;
-  }
-
-  onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-
-  private loadChartData() {
+  protected loadChartData(): void {
     this.http.get<ISensorLineChartData<number>[]>(this.baseUrl + 'chart/sensor/' + this.sensor.id).subscribe(result => {
       this.chartData = result;
       this.dataExists = this.chartData.every(element => element.series.length > 0);
     }, error => console.error(error));
+  }
+
+  protected getUnitId(): number {
+    return this.sensor.unitId;
   }
 }
