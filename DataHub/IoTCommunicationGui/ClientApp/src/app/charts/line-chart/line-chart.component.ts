@@ -1,4 +1,4 @@
-import { Component, Inject, Input, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ISensorLineChartData, IChartDetails } from '../../interfaces';
@@ -9,7 +9,7 @@ import { LineChartBase } from '../../classes/charts/line-chart-base';
   templateUrl: '../../classes/charts/line-chart.component.html',
   styleUrls: ['../../classes/charts/line-chart.component.css']
 })
-export class LineChartComponent extends LineChartBase {
+export class LineChartComponent extends LineChartBase implements OnChanges {
   @Input() chart: IChartDetails;
   @Input() unitId: number;
 
@@ -18,10 +18,14 @@ export class LineChartComponent extends LineChartBase {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.onDataChanged(changes);
+  }
+
+  protected onDataChanged(changes: SimpleChanges): void {
     if (this.unitId === 0)
       return;
 
-    super.ngOnChanges(changes);
+    super.onDataChanged(changes);
   }
 
   protected getUnitId(): number {

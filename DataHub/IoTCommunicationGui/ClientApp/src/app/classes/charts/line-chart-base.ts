@@ -1,10 +1,11 @@
-import { OnChanges, SimpleChanges } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ISensorLineChartData } from '../../interfaces';
 import { UnitType } from '../../enums';
 
-export abstract class LineChartBase implements OnChanges {
+
+export abstract class LineChartBase {
   chartData: ISensorLineChartData<number>[];
   dataExists: boolean;
 
@@ -28,11 +29,6 @@ export abstract class LineChartBase implements OnChanges {
   constructor(protected http: HttpClient, protected baseUrl: string) {
     this.dataExists = false;
     this.chartData = [];
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.chartData = [];
-    this.loadChartData();
   }
 
   getYAxisLabel(): string {
@@ -62,6 +58,11 @@ export abstract class LineChartBase implements OnChanges {
 
   onDeactivate(data): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  }
+
+  protected onDataChanged(changes: SimpleChanges): void {
+    this.chartData = [];
+    this.loadChartData();
   }
 
   protected abstract getUnitId(): number;

@@ -116,16 +116,15 @@ namespace IoTCommunicationGui.Controllers
 
             var results = new List<LineChartDto<double>>();
 
-            foreach(var groupedResult in groupedResults)
+            foreach (var groupedResult in groupedResults)
             {
+                var chartPoints = groupedResult.Select(x => new Tuple<DateTime, double>(RoundToMins(x.EventDateTime), Math.Round(x.EventDoubleValue.Value, 2)))
+                    .OrderBy(x => x.Item1).ToList();
+
                 var result = new LineChartDto<double>
                 {
                     Name = groupedResult.Key,
-                    Series = groupedResult.Select(x => new LineChartPointDto<double>
-                    {
-                        Name = RoundToMins(x.EventDateTime).ToString("dd/MM/yyyy HH:mm"),
-                        Value = Math.Round(x.EventDoubleValue.Value, 2)
-                    })
+                    Series = FillDateGaps(chartPoints)
                 };
                 results.Add(result);
             }
@@ -149,6 +148,44 @@ namespace IoTCommunicationGui.Controllers
                 roundedMins = 45;
 
             return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, roundedMins, 0);
+        }
+
+        /// <summary>
+        /// Filling the gaps, between data. If gaps not filled in ngx-charts will not show graphic with different sensors properly
+        /// </summary>
+        List<LineChartPointDto<double>> FillDateGaps(List<Tuple<DateTime, double>> list)
+        {
+            Tuple<DateTime, double> prevPoint = null;
+            List<LineChartPointDto<double>> result = new();
+            var minsToAdd = -15;
+            
+            foreach (var point in list)
+            {
+                if (prevPoint != null)
+                {
+                    var nextDt = prevPoint.Item1.AddMinutes(minsToAdd);
+
+                    while (point.Item1 < nextDt)
+                    {
+                        AddToResult(new Tuple<DateTime, double>(nextDt, prevPoint.Item2));
+                        nextDt = nextDt.AddMinutes(minsToAdd);
+                    }
+                }
+
+                AddToResult(point);
+                prevPoint = point;
+            }
+
+            return result;
+
+            void AddToResult(Tuple<DateTime, double> pnt)
+            {
+                result.Add(new LineChartPointDto<double>
+                {
+                    Name = RoundToMins(pnt.Item1).ToString("dd/MM/yyyy HH:mm"),
+                    Value = Math.Round(pnt.Item2, 2)
+                });
+            }
         }
 
         #endregion private methods

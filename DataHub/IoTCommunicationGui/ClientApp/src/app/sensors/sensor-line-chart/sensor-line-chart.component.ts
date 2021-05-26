@@ -1,4 +1,4 @@
-import { Component, Inject, Input, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ISensorDetails, ISensorLineChartData } from '../../interfaces';
@@ -9,7 +9,7 @@ import { LineChartBase } from '../../classes/charts/line-chart-base';
   templateUrl: '../../classes/charts/line-chart.component.html',
   styleUrls: ['../../classes/charts/line-chart.component.css']
 })
-export class SensorLineChartComponent extends LineChartBase {
+export class SensorLineChartComponent extends LineChartBase implements OnChanges {
   @Input() sensor: ISensorDetails;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
@@ -17,10 +17,14 @@ export class SensorLineChartComponent extends LineChartBase {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.onDataChanged(changes);
+  }
+
+  protected onDataChanged(changes: SimpleChanges): void {
     if (typeof changes.sensor.currentValue === "undefined")
       return;
 
-    super.ngOnChanges(changes);
+    super.onDataChanged(changes);
   }
 
   protected loadChartData(): void {
