@@ -4,7 +4,8 @@
     {
         OnOffSensor = 0,
         Temperature = 1,
-        Pressure = 2
+        Pressure = 2,
+        Humidity = 3
     }
 
     public enum OnOffEventValue

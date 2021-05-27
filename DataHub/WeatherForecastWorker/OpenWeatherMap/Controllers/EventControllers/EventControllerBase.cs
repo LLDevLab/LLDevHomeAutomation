@@ -46,7 +46,7 @@ namespace WeatherForecastWorker.OpenWeatherMap.Controllers.EventControllers
 
         protected void Save() => DbContext.SaveChanges();
 
-        protected bool EventExist(int sensorId) =>
+        bool EventExist(int sensorId) =>
             DbContext.SensorEvents.Any(x => x.SensorId == sensorId && x.EventDateTime == EventDateTime);
     }
 }

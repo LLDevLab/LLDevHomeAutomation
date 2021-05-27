@@ -1,15 +1,14 @@
-﻿using System;
-using DbCommunicationLib;
+﻿using DbCommunicationLib;
 using DbCommunicationLib.Model;
 using WeatherForecastWorker.OpenWeatherMap.Dtos;
 
 namespace WeatherForecastWorker.OpenWeatherMap.Controllers.EventControllers
 {
-    class TemperatureEventController : EventControllerBase
+    class PressureEventController : EventControllerBase
     {
-        protected override string SensorName => "OpenMapTemp";
+        protected override string SensorName => "OpenMapPress";
 
-        public TemperatureEventController(HomeAutomationContext dbContext, WeatherForecastDto dto) : 
+        public PressureEventController(HomeAutomationContext dbContext, WeatherForecastDto dto) :
             base(dbContext, dto)
         {
         }
@@ -18,9 +17,9 @@ namespace WeatherForecastWorker.OpenWeatherMap.Controllers.EventControllers
         {
             SensorId = sensorId,
             EventDateTime = EventDateTime,
-            EventDoubleValue = KelvinToCelsius(Dto.Main.Temp)
+            EventDoubleValue = ToPascals(Dto.Main.Pressure)
         };
 
-        float KelvinToCelsius(float kelvin) => kelvin - 273.15f;
+        double ToPascals(int hPa) => hPa * 100;
     }
 }
