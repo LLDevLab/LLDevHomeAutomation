@@ -157,7 +157,7 @@ namespace IoTCommunicationGui.Controllers
         {
             Tuple<DateTime, double> prevPoint = null;
             List<LineChartPointDto<double>> result = new();
-            var minsToAdd = -15;
+            const int minsToAdd = 15;
             
             foreach (var point in list)
             {
@@ -165,7 +165,7 @@ namespace IoTCommunicationGui.Controllers
                 {
                     var nextDt = prevPoint.Item1.AddMinutes(minsToAdd);
 
-                    while (point.Item1 < nextDt)
+                    while (point.Item1 > nextDt)
                     {
                         AddToResult(new Tuple<DateTime, double>(nextDt, prevPoint.Item2));
                         nextDt = nextDt.AddMinutes(minsToAdd);
