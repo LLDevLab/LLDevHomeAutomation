@@ -6,7 +6,7 @@ namespace WeatherForecastWorker.OpenWeatherMap.Controllers.EventControllers
 {
     class CloudinessEventController : EventControllerBase
     {
-        protected override string SensorName => "OpenMapWindClouds";
+        protected override string SensorName => "OpenMapClouds";
 
         public CloudinessEventController(HomeAutomationContext dbContext, WeatherForecastDto dto) :
             base(dbContext, dto)
