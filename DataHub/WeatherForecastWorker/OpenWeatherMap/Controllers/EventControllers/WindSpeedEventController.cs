@@ -17,12 +17,7 @@ namespace WeatherForecastWorker.OpenWeatherMap.Controllers.EventControllers
         {
             SensorId = sensorId,
             EventDateTime = EventDateTime,
-            EventDoubleValue = MphToMs(Dto.Wind.Speed)
+            EventDoubleValue = Dto.Wind.Speed
         };
-
-        /// <summary>
-        /// Miles per hour to m/s
-        /// </summary>
-        double MphToMs(float mphSpeed) => mphSpeed * 0.44704;
     }
 }
