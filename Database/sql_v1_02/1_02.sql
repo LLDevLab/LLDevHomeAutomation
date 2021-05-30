@@ -66,3 +66,34 @@ ALTER TABLE public."SensorEvents"
 	
 ALTER TABLE public."Sensors" DROP COLUMN "SensorType";
 DROP TABLE public."SensorTypes";
+
+-- Adding SensorGroups table
+
+CREATE TABLE public."SensorGroups"
+(
+    "Id" smallint NOT NULL,
+    "Name" character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "SensorGroups_pkey" PRIMARY KEY ("Id")
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."SensorGroups"
+    OWNER to postgres;
+
+ALTER TABLE public."Sensors"
+    ADD COLUMN "SensorGroupId" smallint;
+	
+-- set group values of Sensors table before execute next commands
+
+ALTER TABLE public."Sensors" 
+    ALTER COLUMN "SensorGroupId" SET NOT NULL;
+	
+ALTER TABLE public."Sensors"
+    ADD CONSTRAINT "Sensors_SensorGroups_fk" FOREIGN KEY ("SensorGroupId")
+    REFERENCES public."SensorGroups" ("Id") MATCH SIMPLE
+    ON UPDATE RESTRICT
+    ON DELETE RESTRICT;
+

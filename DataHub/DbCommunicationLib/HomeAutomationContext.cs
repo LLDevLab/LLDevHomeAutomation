@@ -11,6 +11,7 @@ namespace DbCommunicationLib
         public virtual DbSet<MeasurementUnit> MeasurementUnits { get; set; }
         public virtual DbSet<Sensor> Sensors { get; set; }
         public virtual DbSet<SensorEvent> SensorEvents { get; set; }
+        public virtual DbSet<SensorGroup> SensorGroups { get; set; }
 
         public HomeAutomationContext() : base()
         {
@@ -80,11 +81,19 @@ namespace DbCommunicationLib
 
                 entity.HasIndex(e => e.UnitId, "fki_Sensors_MeasurementUnits_fk");
 
+                entity.HasIndex(e => e.SensorGroupId, "fki_Sensors_SensorGroups_fk");
+
                 entity.Property(e => e.Description).IsRequired();
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(25);
+
+                entity.HasOne(d => d.SensorGroup)
+                    .WithMany(p => p.Sensors)
+                    .HasForeignKey(d => d.SensorGroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Sensors_SensorGroups_fk");
 
                 entity.HasOne(d => d.Unit)
                     .WithMany(p => p.Sensors)
@@ -108,6 +117,18 @@ namespace DbCommunicationLib
                     .HasForeignKey(d => d.SensorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("SensorEvents_Sensors_fk");
+            });
+
+            modelBuilder.Entity<SensorGroup>(entity =>
+            {
+                entity.HasIndex(e => e.Name, "SensorGroups_Name_Idx")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(20);
             });
 
             OnModelCreatingPartial(modelBuilder);
