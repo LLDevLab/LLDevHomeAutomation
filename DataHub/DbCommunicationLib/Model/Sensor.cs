@@ -16,10 +16,8 @@ namespace DbCommunicationLib.Model
         public bool IsActive { get; set; }
         public string Name { get; set; }
         public bool? InverseLogic { get; set; }
-        public short SensorType { get; set; }
         public short? UnitId { get; set; }
 
-        public virtual SensorType SensorTypeNavigation { get; set; }
         public virtual MeasurementUnit Unit { get; set; }
         public virtual ICollection<SensorEvent> SensorEvents { get; set; }
     }

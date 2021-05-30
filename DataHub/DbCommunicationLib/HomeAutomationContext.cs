@@ -11,7 +11,6 @@ namespace DbCommunicationLib
         public virtual DbSet<MeasurementUnit> MeasurementUnits { get; set; }
         public virtual DbSet<Sensor> Sensors { get; set; }
         public virtual DbSet<SensorEvent> SensorEvents { get; set; }
-        public virtual DbSet<SensorType> SensorTypes { get; set; }
 
         public HomeAutomationContext() : base()
         {
@@ -81,19 +80,11 @@ namespace DbCommunicationLib
 
                 entity.HasIndex(e => e.UnitId, "fki_Sensors_MeasurementUnits_fk");
 
-                entity.HasIndex(e => e.SensorType, "fki_Sensors_SensorTypes_fk");
-
                 entity.Property(e => e.Description).IsRequired();
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(25);
-
-                entity.HasOne(d => d.SensorTypeNavigation)
-                    .WithMany(p => p.Sensors)
-                    .HasForeignKey(d => d.SensorType)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Sensors_SensorTypes_fk");
 
                 entity.HasOne(d => d.Unit)
                     .WithMany(p => p.Sensors)
@@ -104,6 +95,7 @@ namespace DbCommunicationLib
             modelBuilder.Entity<SensorEvent>(entity =>
             {
                 entity.HasIndex(e => new { e.SensorId, e.EventDateTime }, "SensorId_EventDateTime_Idx")
+                    .IsUnique()
                     .HasNullSortOrder(new[] { NullSortOrder.NullsLast, NullSortOrder.NullsLast })
                     .HasSortOrder(new[] { SortOrder.Ascending, SortOrder.Descending });
 
@@ -116,18 +108,6 @@ namespace DbCommunicationLib
                     .HasForeignKey(d => d.SensorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("SensorEvents_Sensors_fk");
-            });
-
-            modelBuilder.Entity<SensorType>(entity =>
-            {
-                entity.HasIndex(e => e.Name, "SensorTypes_Name_constraint")
-                    .IsUnique();
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(25);
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -1,6 +1,6 @@
-﻿using DbCommunicationLib.Model;
-using System;
+﻿using System;
 using System.Globalization;
+using DbCommunicationLib.Model;
 
 namespace DbCommunicationLib.Controller.Sensors
 {

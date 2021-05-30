@@ -1,7 +1,7 @@
-﻿using DbCommunicationLib.Controller.SensorEvents;
+﻿using System;
+using DbCommunicationLib.Controller.SensorEvents;
 using DbCommunicationLib.Model;
 using IoTWorkerService.ModelControllers;
-using System;
 
 namespace DbCommunicationLib.Controller.Sensors
 {
@@ -9,13 +9,13 @@ namespace DbCommunicationLib.Controller.Sensors
     {
         public static SensorControllerBase CreateSensorController(Sensor sensorModel, HomeAutomationContext dbContext)
         {
-            var sensorType = (SensorTypeEnum)sensorModel.SensorType;
-            return sensorType switch
+            var sensorName = sensorModel.Name;
+            return sensorName switch
             {
-                SensorTypeEnum.OnOffSensor => new OnOffSensorController(sensorModel, dbContext),
-                SensorTypeEnum.Pressure => new PressureSensorController(sensorModel, dbContext),
-                SensorTypeEnum.Temperature => new TemperatureSensorController(sensorModel, dbContext),
-                _ => throw new NotImplementedException($"Controller for sensor type {sensorType} is not implemented")
+                "PostBox" => new OnOffSensorController(sensorModel, dbContext),
+                "PcRoomPress" => new PressureSensorController(sensorModel, dbContext),
+                "PcRoomTemp" => new TemperatureSensorController(sensorModel, dbContext),
+                _ => throw new NotImplementedException($"Controller for sensor {sensorName} is not implemented")
             };
         }
         protected Sensor SensorModel { get; private init; }

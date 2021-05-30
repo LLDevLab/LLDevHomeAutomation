@@ -1,15 +1,11 @@
-export enum SensorType {
-  OnOffSensor = 0,
-  Temperature = 1,
-  Pressure = 2,
-  Humidity = 3
-}
-
 export enum UnitType {
   Undefined  = 0,
   DegreeCelsius = 1,
   Pascals = 2,
-  HumidityPerc = 3
+  Percent = 3,
+  Meters = 4,
+  MetersPerSecond = 5,
+  Degree = 6
 }
 
 export enum ChartType {

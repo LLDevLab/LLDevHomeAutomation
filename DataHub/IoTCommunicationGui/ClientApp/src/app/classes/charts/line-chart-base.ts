@@ -40,8 +40,17 @@ export abstract class LineChartBase {
       case UnitType.Pascals:
         label += "(Pa)";
         break;
-      case UnitType.HumidityPerc:
+      case UnitType.Percent:
         label += "(%)";
+        break;
+      case UnitType.Meters:
+        label += "(m)";
+        break;
+      case UnitType.MetersPerSecond:
+        label += "(m/s)";
+        break;
+      case UnitType.Degree:
+        label += "(degree)";
         break;
       default:
         label += "(undefined)";

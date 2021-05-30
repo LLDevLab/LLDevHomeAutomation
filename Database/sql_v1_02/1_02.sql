@@ -63,3 +63,6 @@ CREATE UNIQUE INDEX "SensorId_EventDateTime_Idx"
 
 ALTER TABLE public."SensorEvents"
     CLUSTER ON "SensorId_EventDateTime_Idx";
+	
+ALTER TABLE public."Sensors" DROP COLUMN "SensorType";
+DROP TABLE public."SensorTypes";

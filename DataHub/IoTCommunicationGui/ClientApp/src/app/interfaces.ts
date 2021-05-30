@@ -1,5 +1,4 @@
-import { Timestamp } from "rxjs";
-import { SensorType, UnitType } from "./enums";
+import { UnitType } from "./enums";
 
 export interface INamedTable {
   id: number;
@@ -10,7 +9,6 @@ export interface ISensorDetails extends INamedTable {
   description: string;
   isActive: boolean;
   inverseLogic: boolean;
-  sensorType: SensorType;
   unitId: UnitType;
 }
 

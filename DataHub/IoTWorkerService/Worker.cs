@@ -19,15 +19,13 @@ namespace IoTWorkerService
         readonly IoTCommunication _IoTCommunication;
 
         IClient IoTClient => _IoTCommunication.Client;
-        //readonly HomeAutomationContext _dbContext;
         readonly ICommunicationSettings _mqttSettings;
         readonly IServiceScopeFactory _scopeFactory;
 
-        public Worker(ILogger<Worker> logger, /*HomeAutomationContext dbContext,*/ ICommunicationSettings mqttSettings, IServiceScopeFactory scopeFactory)
+        public Worker(ILogger<Worker> logger, ICommunicationSettings mqttSettings, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _mqttSettings = mqttSettings;
-            //_dbContext = dbContext;
             _scopeFactory = scopeFactory;
             _IoTCommunication = new IoTCommunication(mqttSettings);
             IoTClient.SensorMessageReceived += OnSensorMessageReceived;

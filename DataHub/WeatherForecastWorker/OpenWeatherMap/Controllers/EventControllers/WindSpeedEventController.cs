@@ -4,11 +4,11 @@ using WeatherForecastWorker.OpenWeatherMap.Dtos;
 
 namespace WeatherForecastWorker.OpenWeatherMap.Controllers.EventControllers
 {
-    class HumidityEventController : EventControllerBase
+    class WindSpeedEventController : EventControllerBase
     {
-        protected override string SensorName => "OpenMapHum";
+        protected override string SensorName => "OpenMapWindSpeed";
 
-        public HumidityEventController(HomeAutomationContext dbContext, WeatherForecastDto dto) :
+        public WindSpeedEventController(HomeAutomationContext dbContext, WeatherForecastDto dto) :
             base(dbContext, dto)
         {
         }
@@ -17,7 +17,12 @@ namespace WeatherForecastWorker.OpenWeatherMap.Controllers.EventControllers
         {
             SensorId = sensorId,
             EventDateTime = EventDateTime,
-            EventDoubleValue = Dto.Main.Humidity
+            EventDoubleValue = MphToMs(Dto.Wind.Speed)
         };
+
+        /// <summary>
+        /// Miles per hour to m/s
+        /// </summary>
+        double MphToMs(float mphSpeed) => mphSpeed * 0.44704;
     }
 }

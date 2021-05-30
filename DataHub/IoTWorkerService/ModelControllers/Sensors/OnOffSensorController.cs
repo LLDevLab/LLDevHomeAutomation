@@ -1,6 +1,6 @@
-﻿using DbCommunicationLib.Controller.SensorEvents;
+﻿using System;
+using DbCommunicationLib.Controller.SensorEvents;
 using DbCommunicationLib.Model;
-using System;
 
 namespace DbCommunicationLib.Controller.Sensors
 {

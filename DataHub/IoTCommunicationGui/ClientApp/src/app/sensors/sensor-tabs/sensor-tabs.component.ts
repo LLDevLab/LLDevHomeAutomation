@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { SensorType } from '../../enums';
 import { ISensorDetails } from '../../interfaces';
 
 @Component({
@@ -26,7 +25,7 @@ export class SensorTabsComponent implements OnInit {
   loadSensorDetail(sensorId: string) {
     this.http.get<ISensorDetails>(this.baseUrl + 'sensor/' + sensorId).subscribe(result => {
       this.sensor = result;
-      this.isOnOffSensor = result.sensorType === SensorType.OnOffSensor;
+      this.isOnOffSensor = result.inverseLogic !== null;
     }, error => console.error(error));
   }
 }

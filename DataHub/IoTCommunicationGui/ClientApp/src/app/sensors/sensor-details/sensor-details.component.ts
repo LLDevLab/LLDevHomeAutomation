@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { SensorType, UnitType } from '../../enums';
+import { UnitType } from '../../enums';
 import { ISensorDetails } from '../../interfaces';
 
 export interface SensorFields {
@@ -29,7 +29,6 @@ export class SensorDetailsComponent implements OnChanges {
     if (typeof changes.sensor.currentValue === "undefined")
       return;
 
-    this.sensorType = SensorType[this.sensor.sensorType];
     this.unitType = this.sensor.unitId === null ? 'Undefined' : UnitType[this.sensor.unitId];
 
     this.sensorFields = [];
@@ -42,9 +41,6 @@ export class SensorDetailsComponent implements OnChanges {
     });
     this.sensorFields.push({
       label: 'Description:', value: this.sensor.description
-    });
-    this.sensorFields.push({
-      label: 'Sensor type:', value: this.sensorType
     });
     this.sensorFields.push({
       label: 'Unit type:', value: this.unitType

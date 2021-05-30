@@ -15,7 +15,11 @@ namespace WeatherForecastWorker.OpenWeatherMap.Controllers
             {
                 new TemperatureEventController(dbContext, dto),
                 new PressureEventController(dbContext, dto),
-                new HumidityEventController(dbContext, dto)
+                new HumidityEventController(dbContext, dto),
+                new VisibilityEventController(dbContext, dto),
+                new WindSpeedEventController(dbContext, dto),
+                new WindDegreeEventController(dbContext, dto),
+                new CloudinessEventController(dbContext, dto)
             };
         }
 
