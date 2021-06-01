@@ -12,7 +12,7 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>b3bcf5ce-2fa4-446b-9068-86355f0af321</UserSecretsId>
     <AssemblyName>IoTCommunicationGui</AssemblyName>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\classes\charts\line-chart-base.ts" />
     <None Remove="ClientApp\src\app\sensors\home_automation.ts" />
   </ItemGroup>
 

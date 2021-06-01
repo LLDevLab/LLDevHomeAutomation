@@ -46,6 +46,9 @@ export class SensorDetailsComponent implements OnChanges {
       label: 'Unit type:', value: this.unitType
     });
     this.sensorFields.push({
+      label: 'Sensor group:', value: this.sensor.sensorGroupName
+    });
+    this.sensorFields.push({
       label: 'Is active:', value: String(this.sensor.isActive)
     });
 

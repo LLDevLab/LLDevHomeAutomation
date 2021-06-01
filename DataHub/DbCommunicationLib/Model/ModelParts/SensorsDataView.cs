@@ -2,7 +2,7 @@
 
 namespace DbCommunicationLib.Model
 {
-    public partial class Sensor : ISensor
+    public partial class SensorsDataView : ISensor
     {
     }
 }

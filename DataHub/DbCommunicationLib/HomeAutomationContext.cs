@@ -7,11 +7,12 @@ namespace DbCommunicationLib
     public partial class HomeAutomationContext : DbContext
     {
         public virtual DbSet<Chart> Charts { get; set; }
-        public virtual DbSet<ChartUnitMapping> ChartUnitMappings { get; set; }
+        public virtual DbSet<ChartSensorGroupsMapping> ChartSensorGroupsMappings { get; set; }
         public virtual DbSet<MeasurementUnit> MeasurementUnits { get; set; }
         public virtual DbSet<Sensor> Sensors { get; set; }
         public virtual DbSet<SensorEvent> SensorEvents { get; set; }
         public virtual DbSet<SensorGroup> SensorGroups { get; set; }
+        public virtual DbSet<SensorsDataView> SensorsDataViews { get; set; }
 
         public HomeAutomationContext() : base()
         {
@@ -38,28 +39,28 @@ namespace DbCommunicationLib
                     .HasMaxLength(30);
             });
 
-            modelBuilder.Entity<ChartUnitMapping>(entity =>
+            modelBuilder.Entity<ChartSensorGroupsMapping>(entity =>
             {
-                entity.HasKey(e => new { e.ChartId, e.UnitId })
-                    .HasName("ChartUnitMapping_pkey");
+                entity.HasKey(e => new { e.ChartId, e.SensorGroupId })
+                    .HasName("ChartSensorGroupsMapping_pkey");
 
-                entity.ToTable("ChartUnitMapping");
+                entity.ToTable("ChartSensorGroupsMapping");
 
-                entity.HasIndex(e => e.ChartId, "fki_fki_ChartUnitMapping_Charts_fk");
+                entity.HasIndex(e => e.ChartId, "fki_fki_ChartSensorGroupsMapping_Charts_fk");
 
-                entity.HasIndex(e => e.UnitId, "fki_fki_ChartUnitMapping_MeasurementUnits_fk");
+                entity.HasIndex(e => e.SensorGroupId, "fki_fki_ChartSensorGroupsMapping_SensorGroups_fk");
 
                 entity.HasOne(d => d.Chart)
-                    .WithMany(p => p.ChartUnitMappings)
+                    .WithMany(p => p.ChartSensorGroupsMappings)
                     .HasForeignKey(d => d.ChartId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fki_ChartUnitMapping_Charts_fk");
+                    .HasConstraintName("fki_ChartSensorGroupsMapping_Charts_fk");
 
-                entity.HasOne(d => d.Unit)
-                    .WithMany(p => p.ChartUnitMappings)
-                    .HasForeignKey(d => d.UnitId)
+                entity.HasOne(d => d.SensorGroup)
+                    .WithMany(p => p.ChartSensorGroupsMappings)
+                    .HasForeignKey(d => d.SensorGroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fki_ChartUnitMapping_MeasurementUnits_fk");
+                    .HasConstraintName("fki_ChartSensorGroupsMapping_SensorGroups_fk");
             });
 
             modelBuilder.Entity<MeasurementUnit>(entity =>
@@ -79,8 +80,6 @@ namespace DbCommunicationLib
                 entity.HasIndex(e => e.Name, "Sensors_Name_constraint")
                     .IsUnique();
 
-                entity.HasIndex(e => e.UnitId, "fki_Sensors_MeasurementUnits_fk");
-
                 entity.HasIndex(e => e.SensorGroupId, "fki_Sensors_SensorGroups_fk");
 
                 entity.Property(e => e.Description).IsRequired();
@@ -94,11 +93,6 @@ namespace DbCommunicationLib
                     .HasForeignKey(d => d.SensorGroupId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Sensors_SensorGroups_fk");
-
-                entity.HasOne(d => d.Unit)
-                    .WithMany(p => p.Sensors)
-                    .HasForeignKey(d => d.UnitId)
-                    .HasConstraintName("Sensors_MeasurementUnits_fk");
             });
 
             modelBuilder.Entity<SensorEvent>(entity =>
@@ -124,11 +118,29 @@ namespace DbCommunicationLib
                 entity.HasIndex(e => e.Name, "SensorGroups_Name_Idx")
                     .IsUnique();
 
+                entity.HasIndex(e => e.UnitId, "fki_SensorGroups_MeasumementUnits_fk");
+
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(20);
+
+                entity.HasOne(d => d.Unit)
+                    .WithMany(p => p.SensorGroups)
+                    .HasForeignKey(d => d.UnitId)
+                    .HasConstraintName("SensorGroups_MeasumementUnits_fk");
+            });
+
+            modelBuilder.Entity<SensorsDataView>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("SensorsDataView");
+
+                entity.Property(e => e.Name).HasMaxLength(25);
+
+                entity.Property(e => e.SensorGroupName).HasMaxLength(20);
             });
 
             OnModelCreatingPartial(modelBuilder);

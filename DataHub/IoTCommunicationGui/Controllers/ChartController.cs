@@ -13,7 +13,9 @@ namespace IoTCommunicationGui.Controllers
     [Route("[controller]")]
     public class ChartController : ControllerBase
     {
+#if !DEBUG
         const int daysFromNow = -2;
+#endif
         readonly HomeAutomationContext _context;
         public ChartController(HomeAutomationContext context)
         {
@@ -40,17 +42,18 @@ namespace IoTCommunicationGui.Controllers
             return result;
         }
 
-        [HttpGet("{id:int}/chartunits")]
-        public IEnumerable<ChartUnitMappingDto> GetChartUnits(int id)
+        [HttpGet("{id:int}/sensorgroups")]
+        public IEnumerable<SesnorGroupDto> GetChartSensorGroups(int id)
         {
-            var result = from mappings in _context.ChartUnitMappings
-                          where mappings.ChartId == id
-                          join units in _context.MeasurementUnits on mappings.UnitId equals units.Id
-                         select new ChartUnitMappingDto 
-                          {
-                              UnitId = mappings.UnitId,
-                              UnitName = units.Unit
-                          };
+            var result = from sensorGroups in _context.SensorGroups
+                         join mappings in _context.ChartSensorGroupsMappings on sensorGroups.Id equals mappings.SensorGroupId
+                         where mappings.ChartId == id
+                         select new SesnorGroupDto
+                         {
+                             SensorGroupId = sensorGroups.Id,
+                             SensorGroupName = sensorGroups.Name,
+                             UnitId = sensorGroups.UnitId
+                         };
 
             return result;
         }
@@ -91,8 +94,8 @@ namespace IoTCommunicationGui.Controllers
             return new List<LineChartDto<double>> { result };
         }
 
-        [HttpGet("{chartId:int}/unit/{unitId:int}")]
-        public IEnumerable<LineChartDto<double>> GetChartDataByUnitId(int chartId, int unitId)
+        [HttpGet("{chartId:int}/sensorgroup/{sensorGroupId:int}")]
+        public IEnumerable<LineChartDto<double>> GetChartDataByUnitId(int chartId, int sensorGroupId)
         {
 #if DEBUG
             var dateFrom = new DateTime(2021, 04, 20);
@@ -100,7 +103,7 @@ namespace IoTCommunicationGui.Controllers
             var dateFrom = DateTime.Now.AddDays(daysFromNow);
 #endif
             var queryResults = (from sensors in _context.Sensors
-                                where sensors.UnitId == unitId
+                                where sensors.SensorGroupId == sensorGroupId
                                 join sensorEvents in _context.SensorEvents on sensors.Id equals sensorEvents.SensorId
                                 where sensorEvents.EventDateTime >= dateFrom
                                 // Ascending sort is needed because clustered index of a table is sorted in descendig order
@@ -133,7 +136,7 @@ namespace IoTCommunicationGui.Controllers
         }
 
         #region private methods
-        DateTime RoundToMins(DateTime dateTime)
+        static DateTime RoundToMins(DateTime dateTime)
         {
             var mins = dateTime.Minute;
             int roundedMins;
@@ -188,6 +191,6 @@ namespace IoTCommunicationGui.Controllers
             }
         }
 
-        #endregion private methods
+#endregion private methods
     }
 }

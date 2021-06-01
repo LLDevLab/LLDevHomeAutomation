@@ -8,12 +8,12 @@ namespace DbCommunicationLib.Model
     {
         public Chart()
         {
-            ChartUnitMappings = new HashSet<ChartUnitMapping>();
+            ChartSensorGroupsMappings = new HashSet<ChartSensorGroupsMapping>();
         }
 
         public short Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<ChartUnitMapping> ChartUnitMappings { get; set; }
+        public virtual ICollection<ChartSensorGroupsMapping> ChartSensorGroupsMappings { get; set; }
     }
 }

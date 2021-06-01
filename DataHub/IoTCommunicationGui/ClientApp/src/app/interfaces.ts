@@ -9,6 +9,7 @@ export interface ISensorDetails extends INamedTable {
   description: string;
   isActive: boolean;
   inverseLogic: boolean;
+  sensorGroupName: string;
   unitId: UnitType;
 }
 
@@ -33,7 +34,8 @@ export interface ISensorLineChartPointData<T> {
   value: T;
 }
 
-export interface IChartUnitMapping {
+export interface ISensorGroup {
+  sensorGroupId: number;
+  sensorGroupName: string;
   unitId: number;
-  unitName: string;
 }

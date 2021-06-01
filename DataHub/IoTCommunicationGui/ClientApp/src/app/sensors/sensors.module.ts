@@ -12,14 +12,12 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SensorEventsComponent } from './sensor-events/sensor-events.component';
 import { SensorDetailsComponent } from './sensor-details/sensor-details.component';
 import { SensorTabsComponent } from './sensor-tabs/sensor-tabs.component';
-import { SensorLineChartComponent } from './sensor-line-chart/sensor-line-chart.component';
 
 @NgModule({
   declarations: [
     SensorEventsComponent,
     SensorDetailsComponent,
-    SensorTabsComponent,
-    SensorLineChartComponent
+    SensorTabsComponent
   ],
   imports: [
     CommonModule,

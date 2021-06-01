@@ -2,11 +2,12 @@
 {
     public interface ISensor
     {
-        int Id { get; }
-        string Description { get; }
-        bool IsActive { get; }
-        string Name { get; }
-        bool? InverseLogic { get; }
-        short? UnitId { get; }
+        public int? Id { get; }
+        public string Description { get; }
+        public bool? IsActive { get; }
+        public string Name { get; }
+        public bool? InverseLogic { get; }
+        public string SensorGroupName { get; }
+        public short? UnitId { get; }
     }
 }

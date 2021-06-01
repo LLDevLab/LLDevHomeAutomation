@@ -1,8 +1,8 @@
-﻿using DbCommunicationLib;
-using DbCommunicationLib.Model.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using DbCommunicationLib;
+using DbCommunicationLib.Model.Interfaces;
 
 namespace IoTCommunicationGui.Controllers
 {
@@ -19,7 +19,7 @@ namespace IoTCommunicationGui.Controllers
         [HttpGet]
         public IEnumerable<ISensor> Get()
         {
-            var queryResult = from sensor in _context.Sensors
+            var queryResult = from sensor in _context.SensorsDataViews
                               orderby sensor.Id
                               select sensor;
 
@@ -29,8 +29,8 @@ namespace IoTCommunicationGui.Controllers
         [HttpGet("{id:int}")]
         public ISensor GetDetail(int id)
         {
-            var result = (from sensor in _context.Sensors
-                         where sensor.Id == id
+            var result = (from sensor in _context.SensorsDataViews
+                          where sensor.Id == id
                          select sensor).FirstOrDefault();
 
             return result;
@@ -56,16 +56,6 @@ namespace IoTCommunicationGui.Controllers
                        select sensorEvent).Count();
 
             return cnt;
-        }
-
-        [HttpGet("unitsensors/{unitId:int}")]
-        public IEnumerable<ISensor> GetUnitSensors(int unitId)
-        {
-            var result = from sensors in _context.Sensors
-                       where sensors.UnitId == unitId
-                       select sensors;
-
-            return result;
         }
     }
 }
