@@ -91,9 +91,13 @@ ALTER TABLE public."Sensors"
 ALTER TABLE public."Sensors" 
     ALTER COLUMN "SensorGroupId" SET NOT NULL;
 	
+CREATE INDEX "fki_Sensors_SensorGroups_fk"
+    ON public."Sensors" USING btree
+    ("SensorGroupId" ASC NULLS LAST)
+    TABLESPACE pg_default;
+	
 ALTER TABLE public."Sensors"
     ADD CONSTRAINT "Sensors_SensorGroups_fk" FOREIGN KEY ("SensorGroupId")
     REFERENCES public."SensorGroups" ("Id") MATCH SIMPLE
     ON UPDATE RESTRICT
     ON DELETE RESTRICT;
-
