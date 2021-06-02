@@ -48,7 +48,7 @@ export class LineChartComponent implements OnChanges {
 
   getYAxisLabel(): string {
     let label = "Value ";
-    switch (this.getUnitId()) {
+    switch (this.sensorGroup.unitId) {
       case UnitType.DegreeCelsius:
         label += "(\u00B0C)";
         break;
@@ -82,10 +82,6 @@ export class LineChartComponent implements OnChanges {
   }
 
   onDeactivate(data): void {
-  }
-
-  protected getUnitId(): number {
-    return this.sensorGroup.unitId;
   }
 
   protected loadChartData(): void {
