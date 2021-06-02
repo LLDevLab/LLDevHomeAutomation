@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DbCommunicationLib;
-using DbCommunicationLib.Model.Interfaces;
+using IoTCommunicationGui.Dtos.Sensors;
 
 namespace IoTCommunicationGui.Controllers
 {
@@ -17,33 +17,50 @@ namespace IoTCommunicationGui.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ISensor> Get()
-        {
-            var queryResult = from sensor in _context.SensorsDataViews
-                              orderby sensor.Id
-                              select sensor;
-
-            return queryResult;
-        }
+        public IEnumerable<SensorDto> Get() => 
+            from sensor in _context.SensorsDataViews
+            orderby sensor.Id
+            select new SensorDto 
+            {
+                Id = sensor.Id,
+                Description = sensor.Description,
+                InverseLogic = sensor.InverseLogic,
+                IsActive = sensor.IsActive,
+                Name = sensor.Name,
+                SensorGroupName = sensor.SensorGroupName,
+                UnitId = sensor.UnitId
+            };
 
         [HttpGet("{id:int}")]
-        public ISensor GetDetail(int id)
-        {
-            var result = (from sensor in _context.SensorsDataViews
-                          where sensor.Id == id
-                         select sensor).FirstOrDefault();
-
-            return result;
-        }
+        public SensorDto GetDetail(int id) =>
+            (from sensor in _context.SensorsDataViews
+            where sensor.Id == id
+            select new SensorDto
+            {
+                Id = sensor.Id,
+                Description = sensor.Description,
+                InverseLogic = sensor.InverseLogic,
+                IsActive = sensor.IsActive,
+                Name = sensor.Name,
+                SensorGroupName = sensor.SensorGroupName,
+                UnitId = sensor.UnitId
+            }).First();
 
         [HttpGet("{sensorId:int}/events/{pageSize:int}&{pageIndex:int}")]
-        public IEnumerable<ISensorEvent> GetEvents(int sensorId, int pageSize, int pageIndex)
+        public IEnumerable<SensorEventDto> GetEvents(int sensorId, int pageSize, int pageIndex)
         {
             var recToSkip = pageIndex * pageSize;
             var list = (from sensorEvent in _context.SensorEvents
                         where sensorEvent.SensorId == sensorId
                         orderby sensorEvent.EventDateTime descending
-                        select sensorEvent).Skip(recToSkip).Take(pageSize);
+                        select new SensorEventDto 
+                        {
+                            Id = sensorEvent.Id,
+                            EventBooleanValue = sensorEvent.EventBooleanValue,
+                            EventDateTime = sensorEvent.EventDateTime,
+                            EventDoubleValue = sensorEvent.EventDoubleValue,
+                            SensorId = sensorEvent.SensorId
+                        }).Skip(recToSkip).Take(pageSize);
 
             return list;
         }

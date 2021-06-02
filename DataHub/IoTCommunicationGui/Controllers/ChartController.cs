@@ -1,7 +1,7 @@
 ﻿using DbCommunicationLib;
-using DbCommunicationLib.Model.Interfaces;
 using IoTCommunicationGui.Dtos;
-using IoTCommunicationGui.Dtos.LineChart;
+using IoTCommunicationGui.Dtos.Charts;
+using IoTCommunicationGui.Dtos.Charts.LineChart;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,24 +23,24 @@ namespace IoTCommunicationGui.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<IChart> Get()
-        {
-            var queryResult = from chart in _context.Charts
-                              orderby chart.Id
-                              select chart;
-
-            return queryResult;
-        }
+        public IEnumerable<ChartDto> Get() => 
+            from chart in _context.Charts
+            orderby chart.Id
+            select new ChartDto 
+            {
+                Id = chart.Id,
+                Name = chart.Name
+            };
 
         [HttpGet("{id:int}")]
-        public IChart GetDetail(int id)
-        {
-            var result = (from chart in _context.Charts
-                          where chart.Id == id
-                          select chart).FirstOrDefault();
-
-            return result;
-        }
+        public ChartDto GetDetail(int id) => 
+            (from chart in _context.Charts
+            where chart.Id == id
+            select new ChartDto 
+            {
+                Id = chart.Id,
+                Name = chart.Name
+            }).First();
 
         [HttpGet("{id:int}/sensorgroups")]
         public IEnumerable<SesnorGroupDto> GetChartSensorGroups(int id)
@@ -156,7 +156,7 @@ namespace IoTCommunicationGui.Controllers
         /// <summary>
         /// Filling the gaps, between data. If gaps not filled in ngx-charts will not show graphic with different sensors properly
         /// </summary>
-        List<LineChartPointDto<double>> FillDateGaps(List<Tuple<DateTime, double>> list)
+        static List<LineChartPointDto<double>> FillDateGaps(List<Tuple<DateTime, double>> list)
         {
             Tuple<DateTime, double> prevPoint = null;
             List<LineChartPointDto<double>> result = new();
