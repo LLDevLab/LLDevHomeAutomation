@@ -1,0 +1,5 @@
+<mat-selection-list #sensorsList [multiple]="false">
+  <mat-list-option *ngFor="let sensor of sensors" routerLink="fetch-sensor/{{sensor.id}}" [value]="sensor.id">
+    {{sensor.name}}
+  </mat-list-option>
+</mat-selection-list>

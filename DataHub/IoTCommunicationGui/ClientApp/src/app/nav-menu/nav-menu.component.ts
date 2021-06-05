@@ -60,7 +60,11 @@ export class NavMenuComponent {
   }
 
   private initMenuItems() {
-    const sensorsMenuItems = this.getMenuItem(this.sensors, 'Sensors', 'fetch-sensor');
+    const sensorMenuItem: INamedTable = {
+      id: -1,
+      name: 'Sensor selection'
+    };
+    const sensorsMenuItems = this.getMenuItem([sensorMenuItem], 'Sensors', 'sensor-selection');
     const chartsMenuItems = this.getMenuItem(this.charts, 'Charts', 'fetch-chart');
 
     this.dataSource.data = [sensorsMenuItems, chartsMenuItems];
@@ -75,7 +79,7 @@ export class NavMenuComponent {
 
     values.forEach(function (value) {
       const data: IMenuItem = {
-        id: value.id,
+        id: value.id < 0 ? null : value.id,
         fetchUrl: fetchUrl,
         name: value.name
       };

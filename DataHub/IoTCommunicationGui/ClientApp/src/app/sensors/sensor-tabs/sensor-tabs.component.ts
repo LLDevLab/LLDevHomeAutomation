@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { ISensorDetails } from '../../interfaces';
 
@@ -14,7 +15,8 @@ export class SensorTabsComponent implements OnInit {
   public sensor: ISensorDetails;
   public isOnOffSensor: boolean;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private activatedroute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private location: Location,
+    @Inject('BASE_URL') private baseUrl: string, private activatedroute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activatedroute.params.subscribe(routeParams => {
@@ -27,5 +29,9 @@ export class SensorTabsComponent implements OnInit {
       this.sensor = result;
       this.isOnOffSensor = result.inverseLogic !== null;
     }, error => console.error(error));
+  }
+
+  onBackBtnClick() {
+    this.location.back();
   }
 }
