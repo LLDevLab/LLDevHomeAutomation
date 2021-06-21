@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DbCommunicationLib;
 using IoTCommunicationGui.Dtos.Sensors;
+using System;
 
 namespace IoTCommunicationGui.Controllers
 {
@@ -73,6 +74,43 @@ namespace IoTCommunicationGui.Controllers
                        select sensorEvent).Count();
 
             return cnt;
+        }
+
+        [HttpPost]
+        public IActionResult PostSensorDetails(SensorDto sensorDto)
+        {
+            try
+            {
+                if (sensorDto.Id.HasValue)
+                    UpdateSensor(sensorDto);
+                else
+                    InsertSensor(sensorDto);
+            }
+            catch(NullReferenceException)
+            {
+                return NotFound(sensorDto);
+            }
+
+            return Ok(sensorDto);
+        }
+
+        void UpdateSensor(SensorDto sensorDto)
+        {
+            var sensorId = sensorDto.Id.Value;
+            var sensor = (from sensors in _context.Sensors
+                          where sensors.Id == sensorId
+                          select sensors).FirstOrDefault();
+
+            sensor.Description = sensorDto.Description;
+            sensor.InverseLogic = sensorDto.InverseLogic;
+            sensor.IsActive = sensorDto.IsActive.Value;
+
+            _context.SaveChanges();
+        }
+
+        void InsertSensor(SensorDto sensorDto)
+        {
+
         }
     }
 }
