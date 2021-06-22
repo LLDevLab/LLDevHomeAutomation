@@ -1,0 +1,50 @@
+<form #sensorAddForm="ngForm" (ngSubmit)="onSubmit()">
+  <h2 mat-dialog-title>Add sensor</h2>
+  <mat-dialog-content class="mat-typography">
+    <div>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput required [(ngModel)]="sensorDetails.name" #nameCtrl="ngModel" name="name">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput required [(ngModel)]="sensorDetails.description" #descCtrl="ngModel" name="description"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-checkbox [checked]="sensorDetails.isActive"
+                    (change)="isActiveChanged($event.checked)">
+        Is active
+      </mat-checkbox>
+    </div>
+    <div>
+      <mat-checkbox indeterminate
+                    [checked]="sensorDetails.inverseLogic"
+                    (change)="inverseLogicChanged($event.checked)">
+        Inverse logic
+      </mat-checkbox>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Group name</mat-label>
+        <input matInput required [(ngModel)]="sensorDetails.sensorGroupName" #groupNameCtrl="ngModel" name="groupName">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Unit type</mat-label>
+        <select matNativeControl [(ngModel)]="sensorDetails.unitId" #unitTypeCtrl="ngModel" name="unitId">
+          <option *ngFor="let uType of unitTypeNumKeys" [value]="uType">
+            {{ unitTypeStrKeys[uType] }}
+          </option>
+        </select>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="right">
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+    <button [disabled]="sensorAddForm.invalid" mat-button [mat-dialog-close]="sensorDetails" type="submit">Add</button>
+  </mat-dialog-actions>
+</form>

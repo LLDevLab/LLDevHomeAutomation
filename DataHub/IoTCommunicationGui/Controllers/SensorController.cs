@@ -110,7 +110,20 @@ namespace IoTCommunicationGui.Controllers
 
         void InsertSensor(SensorDto sensorDto)
         {
+            var sensorGroup = (from sensorGroups in _context.SensorGroups
+                               where sensorGroups.Name == sensorDto.SensorGroupName
+                               select sensorGroups).FirstOrDefault();
 
+            var sensor = new DbCommunicationLib.Model.Sensor()
+            {
+                Name = sensorDto.Name,
+                Description = sensorDto.Description,
+                InverseLogic = sensorDto.InverseLogic,
+                IsActive = sensorDto.IsActive.Value,
+                SensorGroupId = sensorGroup.Id
+            };
+            _context.Sensors.Add(sensor);
+            _context.SaveChanges();
         }
     }
 }
