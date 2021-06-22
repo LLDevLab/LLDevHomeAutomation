@@ -38,7 +38,6 @@ export class SensorTabsComponent implements OnInit {
   }
 
   onEditBtnClick() {
-    const _this = this;
     const dialogRef = this.dialog.open(SensorEditDialogComponent, {
       data: {
         sensorDetails: {

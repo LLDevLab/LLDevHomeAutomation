@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
@@ -34,7 +34,6 @@ import { SensorAddDialogComponent } from './sensor-add-dialog/sensor-add-dialog.
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     RouterModule.forChild([
       { path: 'sensor-selection', component: SensorSelectionComponent },
       { path: 'sensor-selection/fetch-sensor/:id', component: SensorTabsComponent }

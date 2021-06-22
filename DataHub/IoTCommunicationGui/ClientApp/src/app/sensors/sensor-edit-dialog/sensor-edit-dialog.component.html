@@ -1,20 +1,11 @@
-<form (ngSubmit)="onSubmit()">
+<form #sensorEditForm="ngForm" (ngSubmit)="onSubmit()">
   <h2 mat-dialog-title>Update sensor details</h2>
   <mat-dialog-content class="mat-typography">
     <div>
-      <mat-form-field required>
-        <mat-label>Name</mat-label>
-        <input matInput [value]="sensorDetails.name" [readonly]="true">
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field required>
+      <mat-form-field>
         <mat-label>Description</mat-label>
-        <textarea matInput [formControl]="descFormControl"></textarea>
+        <textarea required matInput [(ngModel)]="sensorDetails.description" #descCtrl="ngModel" name="description"></textarea>
       </mat-form-field>
-      <mat-error *ngIf="descFormControl.hasError('required')">
-        Description is <strong>required</strong>
-      </mat-error>
     </div>
     <div>
       <mat-checkbox [checked]="sensorDetails.isActive"
@@ -28,26 +19,9 @@
         Inverse logic
       </mat-checkbox>
     </div>
-    <div>
-      <mat-form-field required>
-        <mat-label>Group name</mat-label>
-        <input matInput [value]="sensorDetails.sensorGroupName" [readonly]="true">
-      </mat-form-field>
-    </div>
-    <div *ngIf="sensorDetails.unitId !== null">
-      <mat-form-field required>
-        <mat-label>Unit type</mat-label>
-        <select matNativeControl [disabled]="true">
-          <option *ngFor="let uType of unitTypes" [value]="uType"
-                  [selected]="uType === sensorDetails.unitId">
-            {{ unitTypes[uType] }}
-          </option>
-        </select>
-      </mat-form-field>
-    </div>
   </mat-dialog-content>
   <mat-dialog-actions align="right">
     <button mat-button [mat-dialog-close]="null">Cancel</button>
-    <button mat-button [mat-dialog-close]="sensorDetails" cdkFocusInitial type="submit">Update</button>
+    <button mat-button [mat-dialog-close]="sensorDetails" [disabled]="sensorEditForm.invalid" type="submit">Update</button>
   </mat-dialog-actions>
 </form>
