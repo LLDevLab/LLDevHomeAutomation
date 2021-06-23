@@ -1,3 +1,7 @@
-.selection-btns {
+button {
+  float: right;
+}
+
+mat-icon {
   float: right;
 }

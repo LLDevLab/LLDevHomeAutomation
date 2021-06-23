@@ -31,6 +31,20 @@ export class SensorSelectionComponent implements OnInit {
     });
   }
 
+  onDeleteBtnClick(event, sensor) {
+    event.stopPropagation();
+    this.http.delete(this.baseUrl + 'sensor/' + sensor.id).subscribe(error => console.error(error));
+
+    const newSensors: ISensorDetails[] = [];
+
+    this.sensors.forEach(tmpSensor => {
+      if (tmpSensor.id != sensor.id)
+        newSensors.push(tmpSensor);
+    });
+
+    this.sensors = newSensors;
+  }
+
   private initSensors(): void {
     this.http.get<ISensorDetails[]>(this.baseUrl + 'sensor').subscribe((sensorsData) => {
       this.sensors = sensorsData;

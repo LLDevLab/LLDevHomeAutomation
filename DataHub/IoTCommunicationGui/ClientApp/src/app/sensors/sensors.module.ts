@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
@@ -47,6 +48,7 @@ import { SensorAddDialogComponent } from './sensor-add-dialog/sensor-add-dialog.
     MatInputModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatIconModule,
     NgxChartsModule
   ],
   exports: [RouterModule]

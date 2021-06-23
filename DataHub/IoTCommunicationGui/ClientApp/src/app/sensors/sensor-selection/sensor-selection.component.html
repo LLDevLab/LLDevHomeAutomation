@@ -1,6 +1,11 @@
 <mat-selection-list [multiple]="false">
   <mat-list-option *ngFor="let sensor of sensors" routerLink="fetch-sensor/{{sensor.id}}" [value]="sensor.id">
-    {{sensor.name}}
+    <div>
+      {{sensor.name}}
+      <button mat-icon-button (click)="onDeleteBtnClick($event, sensor)">
+        <mat-icon matListIcon>delete</mat-icon>
+      </button>
+    </div>
   </mat-list-option>
 </mat-selection-list>
-<button class="selection-btns" mat-raised-button (click)="onAddBtnClick()">Add sensor</button>
+<button mat-raised-button (click)="onAddBtnClick()">Add sensor</button>

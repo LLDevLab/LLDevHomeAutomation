@@ -94,6 +94,22 @@ namespace IoTCommunicationGui.Controllers
             return Ok(sensorDto);
         }
 
+        [HttpDelete("{sensorId:int}")]
+        public IActionResult DeleteSensor(int sensorId)
+        {
+            var sensor = (from sensors in _context.Sensors
+                          where sensors.Id == sensorId
+                          select sensors).FirstOrDefault();
+
+            if(sensor == null)
+                return NotFound(sensorId);
+
+            _context.Remove(sensor);
+            _context.SaveChanges();
+
+            return Ok(sensorId);
+        }
+
         void UpdateSensor(SensorDto sensorDto)
         {
             var sensorId = sensorDto.Id.Value;
