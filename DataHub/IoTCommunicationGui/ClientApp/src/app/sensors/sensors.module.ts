@@ -22,6 +22,7 @@ import { SensorTabsComponent } from './sensor-tabs/sensor-tabs.component';
 import { SensorSelectionComponent } from './sensor-selection/sensor-selection.component';
 import { SensorEditDialogComponent } from './sensor-edit-dialog/sensor-edit-dialog.component';
 import { SensorAddDialogComponent } from './sensor-add-dialog/sensor-add-dialog.component';
+import { SensorRemoveDialogComponent } from './sensor-remove-dialog/sensor-remove-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SensorAddDialogComponent } from './sensor-add-dialog/sensor-add-dialog.
     SensorTabsComponent,
     SensorSelectionComponent,
     SensorEditDialogComponent,
-    SensorAddDialogComponent
+    SensorAddDialogComponent,
+    SensorRemoveDialogComponent
   ],
   imports: [
     CommonModule,

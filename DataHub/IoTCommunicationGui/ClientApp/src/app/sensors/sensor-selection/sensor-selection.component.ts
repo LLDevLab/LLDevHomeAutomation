@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { ISensorDetails } from '../../interfaces';
 import { SensorAddDialogComponent } from '../sensor-add-dialog/sensor-add-dialog.component';
+import { SensorRemoveDialogComponent } from '../sensor-remove-dialog/sensor-remove-dialog.component';
 
 @Component({
   selector: 'app-sensor-selection',
@@ -33,16 +34,22 @@ export class SensorSelectionComponent implements OnInit {
 
   onDeleteBtnClick(event, sensor) {
     event.stopPropagation();
-    this.http.delete(this.baseUrl + 'sensor/' + sensor.id).subscribe(error => console.error(error));
 
-    const newSensors: ISensorDetails[] = [];
+    const dialogRef = this.dialog.open(SensorRemoveDialogComponent, null);
 
-    this.sensors.forEach(tmpSensor => {
-      if (tmpSensor.id != sensor.id)
-        newSensors.push(tmpSensor);
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data === true) {
+        this.http.delete(this.baseUrl + 'sensor/' + sensor.id).subscribe(error => console.error(error));
+
+        const newSensors: ISensorDetails[] = [];
+
+        this.sensors.forEach(tmpSensor => {
+          if (tmpSensor.id != sensor.id)
+            newSensors.push(tmpSensor);
+        });
+        this.sensors = newSensors;
+      }
     });
-
-    this.sensors = newSensors;
   }
 
   private initSensors(): void {
