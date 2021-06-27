@@ -4,6 +4,7 @@ using System.Linq;
 using DbCommunicationLib;
 using IoTCommunicationGui.Dtos.Sensors;
 using System;
+using IoTCommunicationGui.Exceptions;
 
 namespace IoTCommunicationGui.Controllers
 {
@@ -86,9 +87,9 @@ namespace IoTCommunicationGui.Controllers
                 else
                     InsertSensor(sensorDto);
             }
-            catch(NullReferenceException)
+            catch(GuiRecordNotFoundException ex)
             {
-                return NotFound(sensorDto);
+                return NotFound(ex.Message);
             }
 
             return Ok(sensorDto);
@@ -117,6 +118,9 @@ namespace IoTCommunicationGui.Controllers
                           where sensors.Id == sensorId
                           select sensors).FirstOrDefault();
 
+            if (sensor == null)
+                throw new GuiRecordNotFoundException($"Sensor with id {sensorId} not found.");
+
             sensor.Description = sensorDto.Description;
             sensor.InverseLogic = sensorDto.InverseLogic;
             sensor.IsActive = sensorDto.IsActive.Value;
@@ -126,9 +130,13 @@ namespace IoTCommunicationGui.Controllers
 
         void InsertSensor(SensorDto sensorDto)
         {
+            var sensorGroupName = sensorDto.SensorGroupName;
             var sensorGroup = (from sensorGroups in _context.SensorGroups
-                               where sensorGroups.Name == sensorDto.SensorGroupName
+                               where sensorGroups.Name == sensorGroupName
                                select sensorGroups).FirstOrDefault();
+
+            if (sensorGroup == null)
+                throw new GuiRecordNotFoundException($"Sensor group '{sensorGroupName}' not found.");
 
             var sensor = new DbCommunicationLib.Model.Sensor()
             {

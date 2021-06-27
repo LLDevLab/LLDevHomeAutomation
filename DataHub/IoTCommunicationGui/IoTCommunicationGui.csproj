@@ -12,7 +12,7 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>b3bcf5ce-2fa4-446b-9068-86355f0af321</UserSecretsId>
     <AssemblyName>IoTCommunicationGui</AssemblyName>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
