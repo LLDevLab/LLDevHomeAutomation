@@ -17,3 +17,8 @@
 .sidenav-content-container {
   min-height: 500px;
 }
+
+button {
+  margin-top: 10px;
+  float: right;
+}

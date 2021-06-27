@@ -1,10 +1,15 @@
 <body>
-  <h1>
-    <a class="navbar-brand" [routerLink]="['/']">{{title}}</a>
-  </h1>
+  <div>
+    <h1>
+      <a class="navbar-brand" (click)="onTitleClick()" [routerLink]="['/']">{{title}}</a>
+      <button mat-icon-button (click)="onSettingsBtnClick()">
+        <mat-icon matListIcon [routerLink]="['/']">settings</mat-icon>
+      </button>
+    </h1>
+  </div>
   <mat-sidenav-container class="sidenav-main">
     <mat-sidenav mode="side" opened class="sidenav-menu-container">
-      <app-nav-menu></app-nav-menu>
+      <app-nav-menu [menuType]="menuType"></app-nav-menu>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content-container">
       <router-outlet></router-outlet>

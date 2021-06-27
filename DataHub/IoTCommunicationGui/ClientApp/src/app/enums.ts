@@ -12,3 +12,8 @@ export enum ChartType {
   Undefined = 0,
   LineChart = 1
 }
+
+export enum MenuType {
+  Main = 0,
+  Settings = 1
+}
