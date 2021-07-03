@@ -1,9 +1,13 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 import { PageEvent } from '@angular/material/paginator';
 
 import { ISensorEvents, ISensorDetails } from '../../interfaces';
+import { SensorEventAddDialogComponent } from '../sensor-event-add-dialog/sensor-event-add-dialog.component';
+
+import { RemoveDialogComponent } from '../remove-dialog/remove-dialog.component';
 
 @Component({
   selector: 'app-sensor-events',
@@ -17,13 +21,13 @@ export class SensorEventsComponent implements OnChanges {
   public sensorEvents: ISensorEvents[];
   public eventsExists: boolean;
   public eventValue: string;
-  public displayedColumns: string[] = ['id', 'value', 'datetime'];
+  public displayedColumns: string[] = ['id', 'value', 'datetime', 'delbtn'];
   public pageSize: number;
   public eventsCount: number;
 
   private pageIndex: number;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string)
+  constructor(public dialog: MatDialog, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string)
   {
     this.pageSize = 5;
     this.pageIndex = 0;
@@ -51,6 +55,52 @@ export class SensorEventsComponent implements OnChanges {
     this.pageSize = pageEvent.pageSize;
     this.pageIndex = pageEvent.pageIndex;
     this.loadSensorEvents();
+  }
+
+  onAddBtnClick() {
+    const dialogRef = this.dialog.open(SensorEventAddDialogComponent, {
+      data: {
+        sensorDetails: {
+          id: this.sensor.id,
+          name: this.sensor.name,
+          description: this.sensor.description,
+          isActive: this.sensor.isActive,
+          inverseLogic: this.sensor.inverseLogic,
+          sensorGroupName: this.sensor.sensorGroupName,
+          unitId: this.sensor.unitId
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data !== null) {
+        this.loadSensorEvents();
+      }
+    });
+  }
+
+  onDeleteBtnClick(event, sensorEvent) {
+    event.stopPropagation();
+
+    const dialogRef = this.dialog.open(RemoveDialogComponent, {
+      data: {
+        elementName: 'sensor event'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data === true) {
+        this.http.delete(this.baseUrl + 'sensor/event/' + sensorEvent.id).subscribe(error => console.error(error));
+
+        const newEvents: ISensorEvents[] = [];
+
+        this.sensorEvents.forEach(tmpEvent => {
+          if (tmpEvent.id !== sensorEvent.id)
+            newEvents.push(tmpEvent);
+        });
+        this.sensorEvents = newEvents;
+      }
+    });
   }
 
   private loadSensorEvents() {

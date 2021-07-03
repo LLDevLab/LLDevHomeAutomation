@@ -95,6 +95,23 @@ namespace IoTCommunicationGui.Controllers
             return Ok(sensorDto);
         }
 
+        [HttpPost("event")]
+        public IActionResult PostSensorEvent(SensorEventDto sensorEventDto)
+        {
+            var sensorEvent = new DbCommunicationLib.Model.SensorEvent()
+            {
+                SensorId = sensorEventDto.SensorId,
+                EventDateTime = sensorEventDto.EventDateTime,
+                EventDoubleValue = sensorEventDto.EventDoubleValue,
+                EventBooleanValue = sensorEventDto.EventBooleanValue
+            };
+
+            _context.SensorEvents.Add(sensorEvent);
+            _context.SaveChanges();
+
+            return Ok(sensorEvent);
+        }
+
         [HttpDelete("{sensorId:int}")]
         public IActionResult DeleteSensor(int sensorId)
         {
@@ -109,6 +126,22 @@ namespace IoTCommunicationGui.Controllers
             _context.SaveChanges();
 
             return Ok(sensorId);
+        }
+
+        [HttpDelete("event/{eventId:int}")]
+        public IActionResult DeleteSensorEvent(int eventId)
+        {
+            var sensorEvent = (from events in _context.SensorEvents
+                          where events.Id == eventId
+                          select events).FirstOrDefault();
+
+            if (sensorEvent == null)
+                return NotFound(eventId);
+
+            _context.Remove(sensorEvent);
+            _context.SaveChanges();
+
+            return Ok(eventId);
         }
 
         void UpdateSensor(SensorDto sensorDto)

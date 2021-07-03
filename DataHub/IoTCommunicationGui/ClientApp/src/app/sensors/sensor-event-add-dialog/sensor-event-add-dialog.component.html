@@ -1,0 +1,27 @@
+<form #sensorEventAddForm="ngForm" (ngSubmit)="onSubmit()">
+  <h2 mat-dialog-title>Add sensor event</h2>
+  <mat-dialog-content class="mat-typography">
+    <div>
+      <mat-form-field>
+        <mat-label>Event date</mat-label>
+        <input required type="datetime-local" matInput [(ngModel)]="dateTimeInput" #descCtrl="ngModel" name="dateTimeInput">
+      </mat-form-field>
+    </div>
+    <div *ngIf="sensorDetails.unitId">
+      <mat-form-field>
+        <mat-label>Value</mat-label>
+        <input [required]="sensorDetails.unitId" type="number" matInput [(ngModel)]="sensorEvent.eventDoubleValue" #descCtrl="ngModel" name="numValInput">
+      </mat-form-field>
+    </div>
+    <div *ngIf="!sensorDetails.unitId">
+      <mat-checkbox [checked]="false"
+                    (change)="boolValChanged($event.checked)">
+        Value
+      </mat-checkbox>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="right">
+    <button mat-button [mat-dialog-close]="null">Cancel</button>
+    <button mat-button [mat-dialog-close]="sensorEvent" [disabled]="sensorEventAddForm.invalid" type="submit">Add</button>
+  </mat-dialog-actions>
+</form>

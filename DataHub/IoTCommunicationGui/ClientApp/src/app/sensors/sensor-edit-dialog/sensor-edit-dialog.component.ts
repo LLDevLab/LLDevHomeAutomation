@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -11,19 +10,16 @@ import { ISensorDetails } from '../../interfaces';
   templateUrl: './sensor-edit-dialog.component.html',
   styleUrls: ['./sensor-edit-dialog.component.css']
 })
-export class SensorEditDialogComponent implements OnInit {
+export class SensorEditDialogComponent {
 
   sensorDetails: ISensorDetails;
   unitTypes = Object.values(UnitType);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  constructor(@Inject(MAT_DIALOG_DATA) data: any,
     @Inject('BASE_URL') private baseUrl: string,
     private http: HttpClient)
   {
-  }
-
-  ngOnInit(): void {
-    this.sensorDetails = this.data.sensorDetails;
+    this.sensorDetails = data.sensorDetails;
   }
 
   isActiveChanged(isActive: boolean) {

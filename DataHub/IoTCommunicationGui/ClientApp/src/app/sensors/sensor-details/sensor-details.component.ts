@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { UnitType } from '../../enums';
 import { ISensorDetails } from '../../interfaces';
+import { SensorEditDialogComponent } from '../sensor-edit-dialog/sensor-edit-dialog.component';
 
 export interface SensorFields {
   label: string;
@@ -23,7 +25,7 @@ export class SensorDetailsComponent implements OnChanges {
   displayedColumns: string[] = ['label', 'value'];
   sensorFields: SensorFields[];
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (typeof changes.sensor.currentValue === "undefined")
@@ -57,5 +59,28 @@ export class SensorDetailsComponent implements OnChanges {
         label: 'Inverse logic:', value: String(this.sensor.inverseLogic)
       });
     }
+  }
+
+  onEditBtnClick() {
+    const dialogRef = this.dialog.open(SensorEditDialogComponent, {
+      data: {
+        sensorDetails: {
+          id: this.sensor.id,
+          name: this.sensor.name,
+          description: this.sensor.description,
+          isActive: this.sensor.isActive,
+          inverseLogic: this.sensor.inverseLogic,
+          sensorGroupName: this.sensor.sensorGroupName,
+          unitId: this.sensor.unitId
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      const sensor = data as ISensorDetails;
+
+      if (sensor !== null)
+        this.sensor = sensor;
+    });
   }
 }

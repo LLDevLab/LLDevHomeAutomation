@@ -2,6 +2,10 @@ table {
   width: 100%;
 }
 
+button {
+  float: right;
+}
+
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
   background-color: #eee;
