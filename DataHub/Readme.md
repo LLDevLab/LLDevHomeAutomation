@@ -1,6 +1,6 @@
 # DataHub
 
-This project contains 4 main parts: 2 libraries and 2 executables.
+This project contains 4 main parts: 2 libraries and 3 executables.
 
 Libraries are:
 - DbCommunicationLib - establish communication to the database and is responsible for reading and writing data to the database.
